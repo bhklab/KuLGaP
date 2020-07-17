@@ -9,11 +9,8 @@
     "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-<<<<<<< HEAD
     "react-papaparse": "^3.4.0",
-=======
     "react-ga": "^3.1.2",
->>>>>>> dd108cc922efab3b12289288d43884214d4b233d
     "react-scripts": "3.4.1",
     "react-table-v6": "^6.8.6",
     "styled-components": "^5.1.1",
