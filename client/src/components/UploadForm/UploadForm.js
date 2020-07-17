@@ -7,8 +7,8 @@ import AnalysisContext from '../Context/AnalysisContext';
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
     border-radius: 25px;
-	  width: 60%;
-	  min-width: 300px;
+    width: 60%;
+    min-width: 300px;
     height: 100%;
     margin: 50px 0px 80px 0px;
     padding: 20px;
@@ -37,20 +37,20 @@ const StyledForm = styled.div`
             cursor: pointer;
             padding: 8px 10px;
             border-radius:10px;
-						font-weight: 600;
-						outline: none;
-						transition: all ease-out 0.25s;
-						margin: 0 5px;
-						min-height: 40px;
-						&:hover {
-							color: ${colors.main};
-							background: white;
-						};
-						&.disabled {
-							cursor: default;
-              background: #778899;
-              color: white;
-						}
+            font-weight: 600;
+            outline: none;
+            transition: all ease-out 0.25s;
+            margin: 0 5px;
+            min-height: 40px;
+            &:hover {
+                color: ${colors.main};
+                background: white;
+            };
+            &.disabled {
+                cursor: default;
+                background: #778899;
+                color: white;
+			}
 		}
 	}
 `;
