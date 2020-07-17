@@ -3,22 +3,30 @@ import output_stat from '../../data/output_stat'
 import AnalysisTable from './AnalysisTable'
 
 const TableData = () => {
-    const returnList = [];
+    const returnDataList = [];
     const columns = Object.keys(output_stat);
-    columns.map((column, i) => {
+    // to get the transformed data for the stats table.
+    columns.forEach((column, i) => {
         if(!i) {
-            Object.keys(output_stat[column]).map(row => {
-                returnList.push({
+            Object.keys(output_stat[column]).forEach(row => {
+                returnDataList.push({
                     [column] : output_stat[column][row]
                 })
             })
         } else {
-            Object.keys(output_stat[column]).map((row, i) => {
-                returnList[i][column] = output_stat[column][row];
+            Object.keys(output_stat[column]).forEach((row, i) => {
+                returnDataList[i][column] = output_stat[column][row];
             })
         }
     })
-    return <AnalysisTable data={returnList}/>
+    // to get the columns for the stats table.
+    const column_data = columns.map(value => {
+        return {
+            Header: value,
+            accessor: value
+        }
+    })
+    return <AnalysisTable data={returnDataList} columns={column_data}/>
 };
 
 export default TableData;
