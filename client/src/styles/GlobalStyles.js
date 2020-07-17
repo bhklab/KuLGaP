@@ -1,14 +1,13 @@
 import { createGlobalStyle } from 'styled-components';
 import colors from './colors';
 import transitions from './transitions';
-import heroImg from '../images/cells-blue.jpg';
-
+import bgImg from '../images/bg.png';
 
 const GlobalStyles = createGlobalStyle`
   
     h1 {
         margin: 0;
-        color: ${colors.pink_main};
+        color: ${colors.main};
         text-align:left;
         font-size: calc(5vw + 5em);
         letter-spacing: 3px;
@@ -17,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
         font-size: calc(5vw + 8em);
     }
     h2 {
-        color: ${colors.pink_main};
+        color: ${colors.main};
         font-family: 'Sen', sans-serif;
         font-weight: 400;
         font-size: calc(1vw + 1.5em);
@@ -35,10 +34,11 @@ const GlobalStyles = createGlobalStyle`
         // background:rgb(0,0,0,0.5);
     }
     .logo {
-        width: calc(5vw + 7em);
+        width: 80% !important;
         padding-top: 30px;
     }
     .header-container {
+        width:100%;
         display:flex;
         justify-content: center;
         align-items:center;
@@ -118,10 +118,10 @@ const GlobalStyles = createGlobalStyle`
         min-height: 100vh;
         display: flex;
         background: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0), 
-        rgba(0, 0, 0, 0)
-        ),url('${heroImg}');
+            to right,
+            rgba(0, 0, 0, 0), 
+            rgba(0, 0, 0, 0)
+        ),url('${bgImg}');
         background-size: cover;
         background-attachment: fixed;
         background-position: center;

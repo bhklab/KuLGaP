@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
-import colors from '../../styles/colors'
+import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
 
 const StyledAnalysis = styled.div`
@@ -10,13 +10,13 @@ const StyledAnalysis = styled.div`
   flex-direction:column;
   align-items: center;
   .analysis-header {
-    color: ${colors.pink_main};
+    color: ${colors.main};
     align-self: flex-start;
     margin: 0 0 10px;
   }
   .container {
     width: 100%;
-    background-color: ${colors.pink_main};
+    background-color: white;
     border-radius: 25px;
     display:flex;
     flex-direction:column;
@@ -27,20 +27,20 @@ const StyledAnalysis = styled.div`
 `;
 
 function Analysis() {
-  const { analysisState } = useContext(AnalysisContext);
-  const { data, loading } = analysisState
+    const { analysisState } = useContext(AnalysisContext);
+    const { data, loading } = analysisState;
 
-  // later we can change it to render conditionally only when data is present
-  // if not we can add a loading component
+    // later we can change it to render conditionally only when data is present
+    // if not we can add a loading component
 
-  return (
-    <StyledAnalysis>
-      <h3 className="analysis-header">Analysis Results</h3>
-      <div className="container">
-        <h2>Plots should go here</h2>
-      </div>
-    </StyledAnalysis>
-  )
+    return (
+        <StyledAnalysis>
+            <h3 className="analysis-header">Analysis Results</h3>
+            <div className="container">
+                <h2>Plots should go here</h2>
+            </div>
+        </StyledAnalysis>
+    );
 }
 
 export default Analysis;

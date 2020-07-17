@@ -5,13 +5,13 @@ import GlobalStyles from './styles/GlobalStyles';
 import Home from './components/Home/Home';
 
 function App() {
-  return (
-    <div className="App">
-      <Normalize />
-      <GlobalStyles />
-      <Home />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Normalize />
+            <GlobalStyles />
+            <Home />
+        </div>
+    );
 }
 
 export default App;
