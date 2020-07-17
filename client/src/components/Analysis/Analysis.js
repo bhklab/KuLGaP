@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
+import TableData from './TableData'
 
 const StyledAnalysis = styled.div`
   width: 100%;
@@ -37,7 +37,7 @@ function Analysis() {
         <StyledAnalysis>
             <h3 className="analysis-header">Analysis Results</h3>
             <div className="container">
-                <h2>Plots should go here</h2>
+                <TableData/>
             </div>
         </StyledAnalysis>
     );

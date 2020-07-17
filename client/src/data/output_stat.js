@@ -210,3 +210,5 @@ const output_stat = {
       "P4*C1": 0.0025883367
     }
 }
+
+export default output_stat;
