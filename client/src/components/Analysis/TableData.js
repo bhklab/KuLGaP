@@ -23,7 +23,8 @@ const TableData = () => {
     const column_data = columns.map(value => {
         return {
             Header: value,
-            accessor: value
+            accessor: value,
+            minWidth: 180
         }
     })
     return <AnalysisTable data={returnDataList} columns={column_data}/>
