@@ -1,33 +1,74 @@
 import React from 'react';
-import output_stat from '../../data/output_stat'
+import { data } from '../../data/xevdb_stats'
 import AnalysisTable from './AnalysisTable'
 
-const TableData = () => {
-    const returnDataList = [];
-    const columns = Object.keys(output_stat);
-    // to get the transformed data for the stats table.
-    columns.forEach((column, i) => {
-        if(!i) {
-            Object.keys(output_stat[column]).forEach(row => {
-                returnDataList.push({
-                    [column] : output_stat[column][row]
-                })
-            })
-        } else {
-            Object.keys(output_stat[column]).forEach((row, i) => {
-                returnDataList[i][column] = output_stat[column][row];
-            })
+const columns = [
+    {
+        Header: 'Patient',
+        accessor: 'patient',
+        minWidth: 170
+    },
+    {
+        Header: 'Model',
+        accessor: 'model',
+        minWidth: 170
+    },
+    {
+        Header: 'Drug',
+        accessor: 'drug',
+        minWidth: 170
+    },
+    {
+        Header: 'mRECIST',
+        accessor: 'mRECIST',
+        minWidth: 170
+    },
+    {
+        Header: 'Best Average Response',
+        accessor: 'bar',
+        minWidth: 170
+    },
+    {
+        Header: 'Slope',
+        accessor: 'slope',
+        minWidth: 170
+    },
+    {
+        Header: 'AUC',
+        accessor: 'AUC',
+        minWidth: 170
+    },
+    {
+        Header: 'Survival (Days)',
+        accessor: 'survival',
+        minWidth: 170
+    },
+]
+
+const parseData = (data) => {
+    // this will create newData array of objects for the table.
+    const newData = [];
+    let total = 0;
+    let drugValue = '';
+    let modelValue = '';
+    
+    data.forEach((eachdata) => {
+        if (newData.length === 0 || drugValue !== eachdata.drug_name || modelValue !== eachdata.model) {
+            newData.push({});
+            drugValue = eachdata.drug_name;
+            modelValue = eachdata.model;
+            newData[total].model = modelValue;
+            newData[total].drug = drugValue;
+            newData[total].patient = eachdata.patient;
+            newData[total].link = eachdata.link;
+            newData[total].row = eachdata.row;
+            total += 1;
         }
-    })
-    // to get the columns for the stats table.
-    const column_data = columns.map(value => {
-        return {
-            Header: value,
-            accessor: value,
-            minWidth: 180
-        }
-    })
-    return <AnalysisTable data={returnDataList} columns={column_data}/>
-};
+        newData[total - 1][eachdata.response_type === 'best.average.response' ? 'bar' : eachdata.response_type] = eachdata.value;
+    });
+    return newData;
+}
+
+const TableData = () => <AnalysisTable data={parseData(data)} columns={columns}/>;
 
 export default TableData;

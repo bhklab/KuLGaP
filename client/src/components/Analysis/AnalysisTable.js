@@ -12,7 +12,7 @@ const AnalysisTable = (props) => {
  			<ReactTable
 				data = {data}
 				columns={columns}
-				defaultPageSize={5}
+				defaultPageSize={10}
 				className="-highlight"
 				filterable
         	/>
