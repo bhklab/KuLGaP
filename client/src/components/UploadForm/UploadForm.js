@@ -62,10 +62,14 @@ const StyledReader = styled.div`
     background: ${colors.main};
     color: white;
     border-radius: 20px;
+    font-weight: 600;
     &:hover {
         background: white;
         color: ${colors.main};
         font-size: 14px;
+    }
+    div {
+        border-width: 0px !important;
     }
 `
 
@@ -159,6 +163,7 @@ function UploadForm() {
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
+                        style={{'border-width': '0px !important'}}
                     >
                         <span>Upload CSV File!</span>
                     </CSVReader>
