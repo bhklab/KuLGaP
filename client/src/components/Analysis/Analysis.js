@@ -9,11 +9,15 @@ const StyledAnalysis = styled.div`
   display:flex;
   flex-direction:column;
   align-items: center;
+
   .analysis-header {
     color: ${colors.main};
     align-self: flex-start;
     margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 700;
   }
+
   .container {
     width: 100%;
     background-color: white;
@@ -37,7 +41,7 @@ function Analysis() {
 
     return (
         <StyledAnalysis>
-            <h3 className="analysis-header">Analysis Results</h3>
+            <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
                 <TableData/>
             </div>

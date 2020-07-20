@@ -9,6 +9,7 @@ const AnalysisTable = (props) => {
     const { data, columns } = props;
     return (
 		<TableWrapper>
+			<h3>Statistics (Model Response)</h3>
  			<ReactTable
 				data = {data}
 				columns={columns}
