@@ -1,16 +1,28 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, jsonify
 import os
-app = Flask(__name__)
+import json
+import simplejson
 
-# app = Flask(__name__,
-#             static_url_path='',
-#             static_folder='client/build')
+app = Flask(__name__)
 
 @app.route('/api')
 def api():
-    return "<h1>API</h1>"
+    # using txt file because json file cannot store NaN values
+    with open('./example/patient.txt', 'r') as patient_file:
+        patient = json.load(patient_file)
+        normalized_patient = simplejson.dumps(
+            patient, ignore_nan=True)
+    with open('./example/summary.txt', 'r') as summary_file:
+        summary = json.load(summary_file)
+        normalized_summary = simplejson.dumps(
+            summary, ignore_nan=True)
+    return {
+        "patient": normalized_patient,
+        "summary": normalized_summary
+    }
 
 
+# Setup that enables react routing when serving static files
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -19,7 +31,6 @@ def serve(path):
         return send_from_directory(os.path.join(path_dir), path)
     else:
         return send_from_directory(os.path.join(path_dir), 'index.html')
-
 
 if __name__ == '__main__':
     app.run()
