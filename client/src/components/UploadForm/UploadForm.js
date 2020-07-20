@@ -1,8 +1,10 @@
 import React, { useState, useRef, useContext } from 'react';
+import { CSVReader } from 'react-papaparse'
 import axios from 'axios';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
+
 
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
@@ -51,9 +53,21 @@ const StyledForm = styled.div`
                 background: #778899;
                 color: white;
 			}
-		}
+        }
+        CSV
 	}
 `;
+
+const StyledReader = styled.div`
+    background: ${colors.main};
+    color: white;
+    border-radius: 20px;
+    &:hover {
+        background: white;
+        color: ${colors.main};
+        font-size: 14px;
+    }
+`
 
 function UploadForm() {
     const [uploadResult, setUploadResult] = useState({ data: null, loading: false, error: null });
@@ -114,6 +128,22 @@ function UploadForm() {
         fileRef.current.click();
     };
 
+    const handleOnDrop = (data) => {
+        console.log('---------------------------')
+        console.log(data)
+        console.log('---------------------------')
+    }
+    
+    const handleOnError = (err, file, inputElem, reason) => {
+        console.log(err)
+    }
+    
+    const handleOnRemoveFile = (data) => {
+        console.log('---------------------------')
+        console.log(data)
+        console.log('---------------------------')
+    }
+
     return (
         <StyledForm>
             <form className="main-submit" onSubmit={onSubmit}>
@@ -124,14 +154,20 @@ function UploadForm() {
                     onChange={onChange}
                     name={file}
                 />
-                <button type="button" className="choose-file" onClick={openFileOption}>Choose a File</button>
-
-                <div className="file-uploaded">
-                    {file === null || file === undefined ? 'No file chosen' : file.name}
-                </div>
+                <StyledReader>
+                    <CSVReader
+                        onDrop={handleOnDrop}
+                        onError={handleOnError}
+                        addRemoveButton
+                        onRemoveFile={handleOnRemoveFile}
+                    >
+                        <span>Upload CSV File!</span>
+                    </CSVReader>
+                </StyledReader>
                 <button type="submit" onSubmit={onSubmit} disabled={!file} className={!file ? 'disabled' : null}>Analyze</button>
                 <button type="button" onClick={getExampleData}>Test</button>
             </form>
+            
             {uploadResult.error ? <p className="error">{uploadResult.error}</p> : null}
         </StyledForm>
 
