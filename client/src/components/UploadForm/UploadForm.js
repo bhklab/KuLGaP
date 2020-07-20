@@ -80,7 +80,6 @@ function UploadForm() {
         setAnalysisState({ data: null, loading: true });
         axios.get('/api')
             .then((res) => {
-                // setUploadResult({ data: res.data, loading: false, error: null });
                 setAnalysisState({ data: res.data, loading: false });
             });
     };
@@ -115,11 +114,11 @@ function UploadForm() {
 
     // when input changes
     const onChange = (e) => {
-        const vcfFile = e.target.files[0];
+        const csvFile = e.target.files[0];
 
         // cancelled
-        if (vcfFile !== undefined) {
-            setFile(vcfFile);
+        if (csvFile !== undefined) {
+            setFile(csvFile);
         }
     };
 

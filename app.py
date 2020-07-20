@@ -10,16 +10,14 @@ def api():
     # using txt file because json file cannot store NaN values
     with open('./example/patient.txt', 'r') as patient_file:
         patient = json.load(patient_file)
-        normalized_patient = simplejson.dumps(
-            patient, ignore_nan=True)
     with open('./example/summary.txt', 'r') as summary_file:
         summary = json.load(summary_file)
-        normalized_summary = simplejson.dumps(
-            summary, ignore_nan=True)
-    return {
-        "patient": normalized_patient,
-        "summary": normalized_summary
-    }
+
+    # converts existing dictionaries into a single json and removes NaN values from it
+    return simplejson.dumps({
+        "patient": patient,
+        "summary": summary
+    }, ignore_nan=True), 200
 
 
 # Setup that enables react routing when serving static files
