@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
 import ModelStatsTable from './ModelStatsTable'
+import BatchStatsTable from './BatchStatsTable'
 
 const StyledAnalysis = styled.div`
   width: 100%;
@@ -42,6 +43,9 @@ function Analysis() {
     return (
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
+            <div className="container">
+            	<BatchStatsTable/>
+            </div>
             <div className="container">
             	<ModelStatsTable/>
             </div>
