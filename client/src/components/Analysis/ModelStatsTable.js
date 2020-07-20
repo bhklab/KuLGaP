@@ -1,5 +1,5 @@
 import React from 'react';
-import { data } from '../../data/xevdb_stats'
+import { data } from '../../data/xevdb_model_stats'
 import AnalysisTable from './AnalysisTable'
 
 const columns = [
@@ -69,6 +69,6 @@ const parseData = (data) => {
     return newData;
 }
 
-const TableData = () => <AnalysisTable data={parseData(data)} columns={columns}/>;
+const ModelStatsTable = () => <AnalysisTable data={parseData(data)} columns={columns}/>;
 
-export default TableData;
+export default ModelStatsTable;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
-import TableData from './TableData'
+import ModelStatsTable from './ModelStatsTable'
 
 const StyledAnalysis = styled.div`
   width: 100%;
@@ -43,7 +43,7 @@ function Analysis() {
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
-                <TableData/>
+            	<ModelStatsTable/>
             </div>
         </StyledAnalysis>
     );
