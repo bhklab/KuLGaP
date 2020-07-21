@@ -262,13 +262,13 @@ const tumorCurve = (data, plotId, minmax) => {
     const expTypes = ['control', 'treatment'];
 
     // positioning variables
-    const width = 970;
+    const width = 670;
     const height = 500;
     const margin = {
         top: 50,
-        right: 260,
+        right: 100,
         bottom: 250,
-        left: 130,
+        left: 100,
     };
 
     // make the svg element
@@ -869,11 +869,9 @@ const TumorGrowthCurve = (props) => {
 
     return (
         <div>
-            <div style={{ margin: 'auto', fontSize: '16px' }}>
-                <div style={{ marginTop: '50px' }}>
-                    <svg id="svg-curve" width={1300} height={620} />
-                </div>
-            </div>
+            <div style={{ marginTop: '50px' }}>
+                <svg id="svg-curve" width={900} height={620} />
+            </div>`
         </div>
     );
 };
