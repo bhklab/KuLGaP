@@ -5,8 +5,9 @@ import simplejson
 
 app = Flask(__name__)
 
-@app.route('/api')
-def api():
+# API route that serves test data
+@app.route('/api/example', methods=['GET'])
+def test():
     # using txt file because json file cannot store NaN values
     with open('./example/patient.txt', 'r') as patient_file:
         patient = json.load(patient_file)
@@ -18,6 +19,15 @@ def api():
         "patient": patient,
         "summary": summary
     }, ignore_nan=True), 200
+
+# Route that is used to communicate with the package
+@app.route('/api/analysis', methods=['POST'])
+def analysis():
+    if request.method == 'POST':
+        file = request.files['file']
+        print(file)
+    return "Success", 200
+
 
 
 # Setup that enables react routing when serving static files
