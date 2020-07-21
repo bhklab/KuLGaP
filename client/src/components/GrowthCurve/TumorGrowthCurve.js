@@ -6,11 +6,8 @@
 /* eslint-disable no-plusplus */
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import GlobalStyles from '../../GlobalStyles';
-import TopNav from '../TopNav/TopNav';
-import StatTable from '../ResponseStat/ModelResponseStatTable';
+
 
 // this will initialize a tooltip.
 const initializeToolTop = () => d3.select('.wrapper')
@@ -872,10 +869,8 @@ const TumorGrowthCurve = (props) => {
 
     return (
         <div>
-            <TopNav />
-            <GlobalStyles />
+            {/* <GlobalStyles /> */}
             <div className="wrapper" style={{ margin: 'auto', fontSize: '16px' }}>
-
                 <div className="curve-wrapper" style={{ marginTop: '100px' }}>
                     <h1>
                             Drug ID =
@@ -888,13 +883,6 @@ const TumorGrowthCurve = (props) => {
                     </h1>
                     <svg id="svg-curve" width={1300} height={620} />
                 </div>
-
-                <StatTable patientParam={patientParam} drugParam={drugParam} />
-
-                <div className="curve-wrapper" style={{ marginTop: '20px', padding: '10px 0px' }}>
-                    <Link to="/datasets"> ←&nbsp;&nbsp;Back to Datasets </Link>
-                </div>
-
             </div>
         </div>
     );

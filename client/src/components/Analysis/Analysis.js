@@ -2,8 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
-import ModelStatsTable from './ModelStatsTable'
-import BatchStatsTable from './BatchStatsTable'
+import ModelStatsTable from './ModelStatsTable';
+import BatchStatsTable from './BatchStatsTable';
+import TumorGrowthCurve from '../GrowthCurve/TumorGrowthCurve';
+
 
 const StyledAnalysis = styled.div`
   width: 100%;
@@ -31,14 +33,15 @@ const StyledAnalysis = styled.div`
   }
 `;
 
-function Analysis() {
+function Analysis(props) {
     const { analysisState } = useContext(AnalysisContext);
     const { data, loading } = analysisState;
+    
 
     // later we can change it to render conditionally only when data is present
     // if not we can add a loading component
 
-  console.log('API DATA', data);
+    console.log('API DATA', data);
 
     return (
         <StyledAnalysis>
@@ -48,6 +51,9 @@ function Analysis() {
             </div>
             <div className="container">
             	<ModelStatsTable/>
+            </div>
+            <div className="container">
+            	<TumorGrowthCurve data={data} patientParam={'unknown'} drugParam={'unknow'}/>
             </div>
         </StyledAnalysis>
     );

@@ -79,7 +79,7 @@ function UploadForm() {
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
     const { loading } = analysisState;
-    const [tumorData, parseTumorData] = useState([]);
+    const [tumorData, parsedTumorData] = useState([]);
 
     // retrieves example data from the backend
     const getExampleData = () => {
@@ -121,18 +121,10 @@ function UploadForm() {
         fileRef.current.click();
     };
 
-    const handleOnDrop = (data, file) => {
-        const csvFile = file;
-        console.log("csvFile", csvFile);
-        // cancelled
-        if (csvFile !== undefined) {
-            setFile(csvFile);
-        }
 
-        console.log(data, tumorData)
+    const handleOnDrop = (data) => {
         let modifiedData = [];
         data.forEach((row, i) => {
-            console.log(row, modifiedData)
             if(!i) {
                 row.data.forEach(value => {
                     let count = 0;
@@ -157,13 +149,16 @@ function UploadForm() {
                 let count = 0;
                 row.data.forEach((value, i)=> {
                     if(!i) {
-                        time = value;
+                        time = Number(value);
                     }
                     else if(value !== '') {
                         modifiedData[count]['pdx_json'].push({
-                            time: time,
-                            volumne: value,
-                            volumne_normal: 0
+                            batch: 'unknown',
+                            time: Number(time),
+                            volumne: Number(value),
+                            volumne_normal: 0,
+                            model: 'unknown',
+                            exp_type: modifiedData[count]['exp_type']
                         })
                         modifiedData[count]['pdx_points'][0]['times'].push(time);
                         modifiedData[count]['pdx_points'][0]['volumes'].push(value);
@@ -173,7 +168,8 @@ function UploadForm() {
                 })
             }
         })
-        console.log(modifiedData)
+        parsedTumorData(modifiedData);
+        setAnalysisState({ data: modifiedData, loading: false });
     }
     
     const handleOnError = (err, file, inputElem, reason) => {
@@ -182,7 +178,7 @@ function UploadForm() {
     }
     
     const handleOnRemoveFile = (data) => {
-        console.log(data)
+        console.log(data, tumorData)
         setFile(null);
     }
 
@@ -206,7 +202,6 @@ function UploadForm() {
                 <button type="submit" onSubmit={onSubmit} disabled={!file} className={!file ? 'disabled' : null}>Analyze</button>
                 <button type="button" onClick={getExampleData}>Test</button>
             </form>
-            
             {uploadResult.error ? <p className="error">{uploadResult.error}</p> : null}
         </StyledForm>
 
