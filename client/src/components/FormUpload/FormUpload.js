@@ -153,9 +153,12 @@ function UploadForm() {
                     }
                     else if(value !== '') {
                         modifiedData[count]['pdx_json'].push({
+                            batch: 'unknown',
                             time: Number(time),
                             volumne: Number(value),
-                            volumne_normal: 0
+                            volumne_normal: 0,
+                            model: 'unknown',
+                            exp_type: modifiedData[count]['exp_type']
                         })
                         modifiedData[count]['pdx_points'][0]['times'].push(time);
                         modifiedData[count]['pdx_points'][0]['volumes'].push(value);
