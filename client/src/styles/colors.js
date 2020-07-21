@@ -4,5 +4,5 @@ export default {
     darkblue_bg: '#0c61a1',
     darkblue_text: '#052f63',
     red_main: '#A93852',
-    tussock: '#ca9954',
+    tussock: '#d5840b',
 };
