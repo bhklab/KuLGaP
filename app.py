@@ -1,16 +1,14 @@
 from flask import Flask, request, send_from_directory, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import os
 import json
 import simplejson
 
 app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app)
 
 # API route that serves test data
 @app.route('/api/example', methods=['GET'])
-@cross_origin()
 def test():
     # using txt file because json file cannot store NaN values
     with open('./example/patient.txt', 'r') as patient_file:
@@ -40,9 +38,7 @@ def analysis():
 
 # Setup that enables react routing when serving static files
 @app.route('/', defaults={'path': ''})
-@cross_origin()
 @app.route('/<path:path>')
-@cross_origin()
 def serve(path):
     path_dir = os.path.abspath("./client/build")  # path react build
     if path != "" and os.path.exists(os.path.join(path_dir, path)):
