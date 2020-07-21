@@ -122,7 +122,14 @@ function UploadForm() {
     };
 
 
-    const handleOnDrop = (data) => {
+    const handleOnDrop = (data, file) => {
+        const csvFile = file;
+        console.log("csvFile", csvFile);
+        // cancelled
+        if (csvFile !== undefined) {
+            setFile(csvFile);
+        }
+
         let modifiedData = [];
         data.forEach((row, i) => {
             if(!i) {
