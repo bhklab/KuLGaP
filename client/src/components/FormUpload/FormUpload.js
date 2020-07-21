@@ -187,9 +187,11 @@ function UploadForm() {
         //     .then((res) => {
         //         setAnalysisState({ data: res.data, loading: false });
         //     });
-        readRemoteFile('https://www.kulgap.ca/example.csv', function (data) {
-            console.log(data)
-            handleOnDrop(data);
+        readRemoteFile('https://www.kulgap.ca/example.csv', {
+            download: true,
+            complete: (results) => {
+                console.log(results)
+            }
         })
     };
 
