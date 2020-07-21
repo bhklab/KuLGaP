@@ -26,8 +26,8 @@ def analysis():
     if request.method == 'POST':
         # converts uploaded file to string
         file = request.files['file']
-        csv_string = file.stream.read().decode("utf-8")
-        print(csv_string)
+        csv_byte_stream = file.stream.read()
+        print(csv_byte_stream)
         return "Success", 200
     else:
         return "Error reading file", 500
