@@ -47,13 +47,13 @@ function Analysis(props) {
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
+            	<TumorGrowthCurve data={data} patientParam={'unknown'} drugParam={'unknow'}/>
+            </div>
+            <div className="container">
             	<BatchStatsTable/>
             </div>
             <div className="container">
             	<ModelStatsTable/>
-            </div>
-            <div className="container">
-            	<TumorGrowthCurve data={data} patientParam={'unknown'} drugParam={'unknow'}/>
             </div>
         </StyledAnalysis>
     );
