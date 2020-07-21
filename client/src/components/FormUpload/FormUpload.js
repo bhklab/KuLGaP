@@ -81,14 +81,16 @@ function UploadForm() {
     const { loading } = analysisState;
     const [tumorData, parsedTumorData] = useState([]);
 
+    // retrieves example data from the backend
     const getExampleData = () => {
         setAnalysisState({ data: null, loading: true });
-        axios.get('/api')
+        axios.get('/api/example')
             .then((res) => {
                 setAnalysisState({ data: res.data, loading: false });
             });
     };
 
+    // uploads csv file for analysis
     const onSubmit = (e) => {
         e.preventDefault();
         if (file) {
@@ -96,41 +98,29 @@ function UploadForm() {
             const data = new FormData();
             data.append('file', file);
             axios.post('/api/upload', data, {})
-            // axios.get('/api/upload')
                 .then((res) => {
                     setFile(null);
                     setAnalysisState({ data: res.data, loading: false });
-                    // setUploadResult({ data: null, loading: false, error: null });
                 })
                 .catch((err) => {
                     console.log(err.response);
                     setFile(null);
                     if (err.response.status >= 400) {
                         const { message } = err.response.data;
-                        // setUploadResult({ data: null, loading: false, error: message });
                         setAnalysisState({ data: null, loading: false, error: message });
                     } else {
-                        // setUploadResult({ data: null, loading: false, error: 'Something went wrong' });
                         setAnalysisState({ data: null, loading: false, error: 'Something went wrong' });
                     }
                 });
         }
     };
 
-    // when input changes
-    const onChange = (e) => {
-        const csvFile = e.target.files[0];
-
-        // cancelled
-        if (csvFile !== undefined) {
-            setFile(csvFile);
-        }
-    };
 
     // for styling the file input
     const openFileOption = () => {
         fileRef.current.click();
     };
+
 
     const handleOnDrop = (data) => {
         let modifiedData = [];
@@ -190,16 +180,10 @@ function UploadForm() {
     return (
         <StyledForm>
             <form className="main-submit" onSubmit={onSubmit}>
-                <input
-                    type="file"
-                    ref={fileRef}
-                    className="input"
-                    onChange={onChange}
-                    name={file}
-                />
                 <StyledReader>
                     <CSVReader
-                        onDrop={handleOnDrop}
+                        ref={fileRef}
+                        onDrop={(data, file) => handleOnDrop(data, file)}
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
