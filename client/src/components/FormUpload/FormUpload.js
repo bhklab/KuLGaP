@@ -1,10 +1,10 @@
 import React, { useState, useRef, useContext } from 'react';
-import { CSVReader } from 'react-papaparse'
+import { CSVReader, readRemoteFile } from 'react-papaparse'
 import axios from 'axios';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
-
+import * as d3 from 'd3';
 
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
@@ -80,15 +80,6 @@ function UploadForm() {
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
     const { loading } = analysisState;
     const [tumorData, parsedTumorData] = useState([]);
-
-    // retrieves example data from the backend
-    const getExampleData = () => {
-        setAnalysisState({ data: null, loading: true });
-        axios.get('/api/example')
-            .then((res) => {
-                setAnalysisState({ data: res.data, loading: false });
-            });
-    };
 
     // uploads csv file for analysis
     const onSubmit = (e) => {
@@ -187,6 +178,20 @@ function UploadForm() {
         console.log(data, tumorData)
         setFile(null);
     }
+
+    // retrieves example data from the backend
+    const getExampleData = () => {
+        console.log('here')
+        // setAnalysisState({ data: null, loading: true });
+        // axios.get('/api/example')
+        //     .then((res) => {
+        //         setAnalysisState({ data: res.data, loading: false });
+        //     });
+        readRemoteFile('https://www.kulgap.ca/example.csv', function (data) {
+            console.log(data)
+            handleOnDrop(data);
+        })
+    };
 
     console.log("Selected File is ", file);
 
