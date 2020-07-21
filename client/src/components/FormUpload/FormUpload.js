@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
-import * as d3 from 'd3';
+
 
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
@@ -113,9 +113,8 @@ function UploadForm() {
     };
 
 
-    const handleOnDrop = (data, file) => {
+    const handleOnDrop = (data, isDrop, file) => {
         const csvFile = file;
-        console.log("csvFile", csvFile);
         // cancelled
         if (csvFile !== undefined) {
             setFile(csvFile);
@@ -124,7 +123,8 @@ function UploadForm() {
         let modifiedData = [];
         data.forEach((row, i) => {
             if(!i) {
-                row.data.forEach((value, j) => {
+                const row_data = isDrop ? row.data : row
+                row_data.forEach((value, j) => {
                     let count = 0;
                     if(value.match(/(Control|Treatment)/g)) {
                         modifiedData.push({
@@ -144,7 +144,8 @@ function UploadForm() {
             } else {
                 let time = 0;
                 let count = 0;
-                row.data.forEach((value, i)=> {
+                const row_data = isDrop ? row.data : row
+                row_data.forEach((value, i)=> {
                     if(!i) {
                         time = Number(value);
                     }
@@ -181,17 +182,11 @@ function UploadForm() {
 
     // retrieves example data from the backend
     const getExampleData = () => {
-        console.log('here')
-        // setAnalysisState({ data: null, loading: true });
-        // axios.get('/api/example')
-        //     .then((res) => {
-        //         setAnalysisState({ data: res.data, loading: false });
-        //     });
-
-        readRemoteFile('https://www.kulgap.ca/api/example', {
+        readRemoteFile('example.csv', {
             download: true,
             complete: (results) => {
                 console.log(results)
+                handleOnDrop(results.data, false)
             }
         })
     };
@@ -204,7 +199,7 @@ function UploadForm() {
                 <StyledReader>
                     <CSVReader
                         ref={fileRef}
-                        onDrop={(data, file) => handleOnDrop(data, file)}
+                        onDrop={(data, file) => handleOnDrop(data, true, file)}
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
