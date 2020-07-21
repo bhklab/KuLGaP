@@ -7,7 +7,7 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
-
+import colors from '../../styles/colors';
 
 // this will initialize a tooltip.
 const initializeToolTop = () => d3.select('.wrapper')
@@ -209,9 +209,9 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .attr('class', 'error')
         .attr('stroke', () => {
             if (exp === 'control') {
-                return '#cd5686';
+                return `${colors.tussock}`;
             }
-            return '#5974c4';
+            return `${colors.main}`;
         })
         .attr('stroke-width', 2)
         .attr('x1', (d) => xrange(d))
@@ -227,9 +227,9 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .attr('class', 'errorTop')
         .attr('stroke', () => {
             if (exp === 'control') {
-                return '#cd5686';
+                return `${colors.tussock}`;
             }
-            return '#5974c4';
+            return `${colors.main}`;
         })
         .attr('stroke-width', 2)
         .attr('x1', (d) => xrange(d) - 4)
@@ -245,9 +245,9 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .attr('class', 'errorBot')
         .attr('stroke', () => {
             if (exp === 'control') {
-                return '#cd5686';
+                return `${colors.tussock}`;
             }
-            return '#5974c4';
+            return `${colors.main}`;
         })
         .attr('stroke-width', 2)
         .attr('x1', (d) => xrange(d) - 4)
@@ -293,9 +293,9 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('r', 5)
         .attr('fill', (d, i) => {
             if (expTypes[i] === 'control') {
-                return '#cd5686';
+                return `${colors.tussock}`;
             }
-            return '#5974c4';
+            return `${colors.main}`;
         })
         .attr('cx', width + 30)
         .attr('cy', (d, i) => height / 2 - 50 + (i * 50));
@@ -431,9 +431,9 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .attr('r', 4)
                 .attr('fill', () => {
                     if (expTypes[n] === 'control') {
-                        return '#cd5686';
+                        return `${colors.tussock}`;
                     }
-                    return '#5974c4';
+                    return `${colors.main}`;
                 })
                 .attr('cx', (d, i) => xrange(times[i]))
                 .attr('cy', (d, i) => yrange(meanVolume[i]));
@@ -455,9 +455,9 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .style('opacity', 0.2)
                 .attr('stroke', () => {
                     if (expTypes[n] === 'control') {
-                        return '#cd5686';
+                        return `${colors.tussock}`;
                     }
-                    return '#5974c4';
+                    return `${colors.main}`;
                 })
                 .attr('stroke-width', 2);
         }
@@ -493,7 +493,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
         });
 
     // creating line.
-    const createLine = (stroke, opacity, color = '#cd5686') => (
+    const createLine = (stroke, opacity, color = `${colors.tussock}`) => (
         paths.append('path')
             .attr('id', (d) => `path-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}`)
             .attr('class', (d) => `model-path_${d.exp_type}`)
@@ -505,9 +505,9 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
                     return color;
                 }
                 if (d.exp_type === 'control') {
-                    return '#cd5686';
+                    return `${colors.tussock}`;
                 }
-                return '#5974c4';
+                return `${colors.main}`;
             })
             .attr('stroke-width', stroke)
     );
@@ -537,7 +537,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
             // creating tooltip.
             createToolTip(d, 'line', tooltip);
             // changing attributes of the line on mouseover.
-            tableSelect(d, 5, 1.0, '#f5f5f5', '#5974c4', '#f5f5f5', '#5974c4');
+            tableSelect(d, 5, 1.0, '#f5f5f5', `${colors.main}`, '#f5f5f5', `${colors.main}`);
         })
         .on('mouseout', (d) => {
             // remove all the divs with id tooltiptext.
@@ -547,7 +547,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
                 .style('visibility', 'hidden');
             // changing attributes back to normal of the line on mouseout.
             if (!(d3.select(`#path-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}`).classed('selected'))) {
-                tableSelect(d, 3, 0.7, '#cd5686', 'white', '#5974c4', 'white');
+                tableSelect(d, 3, 0.7, `${colors.tussock}`, 'white', `${colors.main}`, 'white');
             }
         })
         .on('click', (d) => {
@@ -564,7 +564,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
                         const previousSelection = d3.select(`.${val.classList[0]}`);
                         const model = previousSelection.data()[0];
                         previousSelection.classed('selected', false);
-                        tableSelect(model, 3, 0.7, '#cd5686', 'white', '#5974c4', 'white');
+                        tableSelect(model, 3, 0.7, `${colors.tussock}`, 'white', `${colors.main}`, 'white');
                         if (val.classList[0] === selection.attr('class')) {
                             selectedCurve = true;
                         }
@@ -575,10 +575,10 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
             // highlight and classed according to selection.
             if (!(selection.classed('selected')) && !selectedCurve) {
                 selection.classed('selected', true);
-                tableSelect(d, 5, 1.0, '#f5f5f5', '#5974c4', '#f5f5f5', '#5974c4');
+                tableSelect(d, 5, 1.0, '#f5f5f5', `${colors.main}`, '#f5f5f5', `${colors.main}`);
             } else if (selection.classed('selected')) {
                 selection.classed('selected', false);
-                tableSelect(d, 3, 0.7, '#cd5686', 'white', '#5974c4', 'white');
+                tableSelect(d, 3, 0.7, `${colors.tussock}`, 'white', `${colors.main}`, 'white');
             }
         });
 
@@ -595,9 +595,9 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
         .attr('r', 4)
         .attr('fill', (d) => {
             if (d.exp_type === 'control') {
-                return '#cd5686';
+                return `${colors.tussock}`;
             }
-            return '#5974c4';
+            return `${colors.main}`;
         })
         .style('opacity', 1.0)
         .attr('cx', (d) => xrange(d.time))
@@ -704,11 +704,11 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
     toggleValues.forEach((val) => {
         // setting the initial variables.
         let additionalHeight = 50;
-        let color = '#cd5686';
+        let color = `${colors.tussock}`;
         let id = '';
-        let rawToggle = '#5974c4';
+        let rawToggle = `${colors.main}`;
         let normToggle = 'lightgray';
-        let allToggle = '#cd5686';
+        let allToggle = `${colors.tussock}`;
         let errorToggle = 'lightgray';
         let minimum = 0;
         let maximum = maxVolume;
@@ -727,7 +727,7 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
             text = val === 'errorBarText' ? 'ErrorBars' : '';
             extraWidth = 34;
             allToggle = 'lightgray';
-            errorToggle = '#cd5686';
+            errorToggle = `${colors.tussock}`;
             break;
 
         case 'allCurves':
@@ -744,7 +744,7 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
         case 'volRaw':
             additionalHeight = 120;
             id = 'volRawToggle';
-            color = '#5974c4';
+            color = `${colors.main}`;
             break;
 
         case 'volRawText':
@@ -761,7 +761,7 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
             minimum = minVolNorm - 1;
             maximum = maxVolNorm + 1;
             rawToggle = 'lightgray';
-            normToggle = '#5974c4';
+            normToggle = `${colors.main}`;
             break;
 
         case 'volNormText':
@@ -772,7 +772,7 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
             minimum = minVolNorm - 1;
             maximum = maxVolNorm + 1;
             rawToggle = 'lightgray';
-            normToggle = '#5974c4';
+            normToggle = `${colors.main}`;
             break;
 
         default:
@@ -799,11 +799,11 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
                     if (val.className) {
                         d3.select(`.${val.className}`)
                             .selectAll('td')
-                            .style('color', '#cd5686')
+                            .style('color', `${colors.tussock}`)
                             .style('background', 'white');
                         d3.select(`.${val.className}`)
                             .selectAll('a')
-                            .style('color', '#5974c4')
+                            .style('color', `${colors.main}`)
                             .style('background', 'white');
                     }
                 });
@@ -869,18 +869,8 @@ const TumorGrowthCurve = (props) => {
 
     return (
         <div>
-            {/* <GlobalStyles /> */}
-            <div className="wrapper" style={{ margin: 'auto', fontSize: '16px' }}>
-                <div className="curve-wrapper" style={{ marginTop: '100px' }}>
-                    <h1>
-                            Drug ID =
-                        {' '}
-                        <span style={{ color: '#cd5686' }}>{drugParam.replace(/\s\s\s/g, ' + ').replace(/\s\s/g, ' + ')}</span>
-                        {' '}
-                            and Patient ID =
-                        {' '}
-                        <span style={{ color: '#cd5686' }}>{patientParam}</span>
-                    </h1>
+            <div style={{ margin: 'auto', fontSize: '16px' }}>
+                <div style={{ marginTop: '50px' }}>
                     <svg id="svg-curve" width={1300} height={620} />
                 </div>
             </div>
