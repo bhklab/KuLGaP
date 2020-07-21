@@ -129,7 +129,7 @@ function UploadForm() {
                     if(value.match(/(Control|Treatment)/g)) {
                         modifiedData.push({
                             batch: 'unknown',
-                            drug: 'unknown',
+                            drug: value === 'Control' ? 'WATER': 'unknown',
                             exp_type: value.toLowerCase(),
                             model: `unknown${j}`,
                             pdx_json : [],
@@ -153,13 +153,13 @@ function UploadForm() {
                         modifiedData[count]['pdx_json'].push({
                             batch: 'unknown',
                             time: Number(time),
-                            volumne: Number(value),
-                            volumne_normal: 0,
+                            volume: Number(value),
+                            volume_normal: 0,
                             model: modifiedData[count]['model'],
                             exp_type: modifiedData[count]['exp_type']
                         })
-                        modifiedData[count]['pdx_points'][0]['times'].push(time);
-                        modifiedData[count]['pdx_points'][0]['volumes'].push(value);
+                        modifiedData[count]['pdx_points'][0]['times'].push(Number(time));
+                        modifiedData[count]['pdx_points'][0]['volumes'].push(Number(value));
                         modifiedData[count]['pdx_points'][0]['volume_normals'].push(0);
                         count ++;
                     }
@@ -176,7 +176,6 @@ function UploadForm() {
     }
     
     const handleOnRemoveFile = (data) => {
-        console.log(data, tumorData)
         setFile(null);
     }
 
@@ -185,7 +184,6 @@ function UploadForm() {
         readRemoteFile('example.csv', {
             download: true,
             complete: (results) => {
-                console.log(results)
                 handleOnDrop(results.data, false)
             }
         })
