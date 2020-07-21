@@ -21,12 +21,16 @@ def test():
     }, ignore_nan=True), 200
 
 # Route that is used to communicate with the package
-@app.route('/api/analysis', methods=['POST'])
+@app.route('/api/upload', methods=['POST'])
 def analysis():
     if request.method == 'POST':
+        # converts uploaded file to string
         file = request.files['file']
-        print(file)
-    return "Success", 200
+        csv_string = file.stream.read().decode("utf-8")
+        print(csv_string)
+        return "Success", 200
+    else:
+        return "Error reading file", 500
 
 
 

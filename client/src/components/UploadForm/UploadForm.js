@@ -99,12 +99,12 @@ function UploadForm() {
             data.append('file', file);
             axios.post('/api/upload', data, {})
                 .then((res) => {
-                    setFile(null);
+                    // setFile(null);
                     setAnalysisState({ data: res.data, loading: false });
                 })
                 .catch((err) => {
                     console.log(err.response);
-                    setFile(null);
+                    // setFile(null);
                     if (err.response.status >= 400) {
                         const { message } = err.response.data;
                         setAnalysisState({ data: null, loading: false, error: message });
@@ -178,11 +178,15 @@ function UploadForm() {
     
     const handleOnError = (err, file, inputElem, reason) => {
         console.log(err)
+        setFile(null);
     }
     
     const handleOnRemoveFile = (data) => {
         console.log(data)
+        setFile(null);
     }
+
+    console.log("Selected File is ", file);
 
     return (
         <StyledForm>
