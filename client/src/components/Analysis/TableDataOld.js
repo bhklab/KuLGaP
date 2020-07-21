@@ -2,7 +2,7 @@ import React from 'react';
 import output_stat from '../../data/output_stat'
 import AnalysisTable from './AnalysisTable'
 
-const TableData = () => {
+const TableDataOld = () => {
     const returnDataList = [];
     const columns = Object.keys(output_stat);
     // to get the transformed data for the stats table.
@@ -30,4 +30,4 @@ const TableData = () => {
     return <AnalysisTable data={returnDataList} columns={column_data}/>
 };
 
-export default TableData;
+export default TableDataOld;

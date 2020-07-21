@@ -6,15 +6,21 @@ import TableWrapper from '../../styles/TableStyle';
 
 
 const AnalysisTable = (props) => {
-    const { data, columns } = props;
+    const { data, columns, type } = props;
     return (
 		<TableWrapper>
+			{
+				type === 'model' 
+				? <h3>Statistics (Model Response)</h3>
+				: <h3>Statistics (Batch Response)</h3>
+			}
  			<ReactTable
 				data = {data}
 				columns={columns}
-				defaultPageSize={5}
+				defaultPageSize={type === 'model' ? 10 : 2}
 				className="-highlight"
-				filterable
+				filterable={type === 'model'}
+				showPagination={type === 'model'}
         	/>
 		</TableWrapper>
     )

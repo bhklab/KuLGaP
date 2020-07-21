@@ -62,10 +62,14 @@ const StyledReader = styled.div`
     background: ${colors.main};
     color: white;
     border-radius: 20px;
+    font-weight: 600;
     &:hover {
         background: white;
         color: ${colors.main};
         font-size: 14px;
+    }
+    div {
+        border-width: 0px !important;
     }
 `
 
@@ -75,6 +79,7 @@ function UploadForm() {
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
     const { loading } = analysisState;
+    const [tumorData, parseTumorData] = useState([]);
 
     // retrieves example data from the backend
     const getExampleData = () => {
@@ -110,6 +115,7 @@ function UploadForm() {
         }
     };
 
+
     // for styling the file input
     const openFileOption = () => {
         fileRef.current.click();
@@ -123,10 +129,51 @@ function UploadForm() {
             setFile(csvFile);
         }
 
-        console.log('---------------------------')
-        console.log(data)
-        console.log('---------------------------')
-
+        console.log(data, tumorData)
+        let modifiedData = [];
+        data.forEach((row, i) => {
+            console.log(row, modifiedData)
+            if(!i) {
+                row.data.forEach(value => {
+                    let count = 0;
+                    if(value.match(/(Control|Treatment)/g)) {
+                        console.log(value)
+                        modifiedData.push({
+                            batch: 'unknown',
+                            drug: 'unknown',
+                            exp_type: value.toLowerCase(),
+                            model: 'unknown',
+                            pdx_json : [],
+                            pdx_points: [{
+                                times: [],
+                                volumes: [],
+                                volume_normals: []
+                            }]
+                        })
+                    }
+                })
+            } else {
+                let time = 0;
+                let count = 0;
+                row.data.forEach((value, i)=> {
+                    if(!i) {
+                        time = value;
+                    }
+                    else if(value !== '') {
+                        modifiedData[count]['pdx_json'].push({
+                            time: time,
+                            volumne: value,
+                            volumne_normal: 0
+                        })
+                        modifiedData[count]['pdx_points'][0]['times'].push(time);
+                        modifiedData[count]['pdx_points'][0]['volumes'].push(value);
+                        modifiedData[count]['pdx_points'][0]['volume_normals'].push(0);
+                        count ++;
+                    }
+                })
+            }
+        })
+        console.log(modifiedData)
     }
     
     const handleOnError = (err, file, inputElem, reason) => {
@@ -134,9 +181,7 @@ function UploadForm() {
     }
     
     const handleOnRemoveFile = (data) => {
-        console.log('---------------------------')
         console.log(data)
-        console.log('---------------------------')
     }
 
     return (
@@ -149,6 +194,7 @@ function UploadForm() {
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
+                        style={{'border-width': '0px !important'}}
                     >
                         <span>Upload CSV File!</span>
                     </CSVReader>

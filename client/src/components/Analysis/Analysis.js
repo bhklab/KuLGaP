@@ -2,18 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
-import TableData from './TableData'
+import ModelStatsTable from './ModelStatsTable'
+import BatchStatsTable from './BatchStatsTable'
 
 const StyledAnalysis = styled.div`
   width: 100%;
   display:flex;
   flex-direction:column;
   align-items: center;
+
   .analysis-header {
     color: ${colors.main};
     align-self: flex-start;
     margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 700;
   }
+
   .container {
     width: 100%;
     background-color: white;
@@ -37,9 +42,12 @@ function Analysis() {
 
     return (
         <StyledAnalysis>
-            <h3 className="analysis-header">Analysis Results</h3>
+            <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
-                <TableData/>
+            	<BatchStatsTable/>
+            </div>
+            <div className="container">
+            	<ModelStatsTable/>
             </div>
         </StyledAnalysis>
     );
