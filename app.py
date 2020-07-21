@@ -4,7 +4,10 @@ import os
 import json
 import simplejson
 
-app = Flask(__name__)
+# app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='client/build')
 CORS(app)
 
 # API route that serves test data
@@ -35,6 +38,9 @@ def analysis():
         return "Error reading file", 500
 
 
+# @app.route('/')
+# def root():
+#     return app.send_static_file('index.html')
 
 # Setup that enables react routing when serving static files
 @app.route('/', defaults={'path': ''})
