@@ -133,15 +133,14 @@ function UploadForm() {
         let modifiedData = [];
         data.forEach((row, i) => {
             if(!i) {
-                row.data.forEach(value => {
+                row.data.forEach((value, j) => {
                     let count = 0;
                     if(value.match(/(Control|Treatment)/g)) {
-                        console.log(value)
                         modifiedData.push({
                             batch: 'unknown',
                             drug: 'unknown',
                             exp_type: value.toLowerCase(),
-                            model: 'unknown',
+                            model: `unknown${j}`,
                             pdx_json : [],
                             pdx_points: [{
                                 times: [],
@@ -164,7 +163,7 @@ function UploadForm() {
                             time: Number(time),
                             volumne: Number(value),
                             volumne_normal: 0,
-                            model: 'unknown',
+                            model: modifiedData[count]['model'],
                             exp_type: modifiedData[count]['exp_type']
                         })
                         modifiedData[count]['pdx_points'][0]['times'].push(time);
