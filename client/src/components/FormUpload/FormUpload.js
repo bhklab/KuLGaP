@@ -1,5 +1,6 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { CSVReader, readRemoteFile } from 'react-papaparse'
+import { CSVLink } from "react-csv";
 import axios from 'axios';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
@@ -73,13 +74,23 @@ const StyledReader = styled.div`
     }
 `
 
-function UploadForm() {
+const UploadForm = () => {
     const [uploadResult, setUploadResult] = useState({ data: null, loading: false, error: null });
     const [file, setFile] = useState(null);
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
     const { loading } = analysisState;
-    const [tumorData, parsedTumorData] = useState([]);
+    const [ exampleFile, setExampleFile ] = useState([]);
+
+    // to set the example file on the initial render.
+    useEffect(() => {
+            readRemoteFile('example.csv', {
+                download: true,
+                complete: (results) => {
+                    setExampleFile(results.data);
+                }
+            })
+    }, [])
 
     // uploads csv file for analysis
     const onSubmit = (e) => {
@@ -166,7 +177,6 @@ function UploadForm() {
                 })
             }
         })
-        parsedTumorData(modifiedData);
         setAnalysisState({ data: modifiedData, loading: false });
     }
     
@@ -203,9 +213,12 @@ function UploadForm() {
                         onRemoveFile={handleOnRemoveFile}
                         style={{'border-width': '0px !important'}}
                     >
-                        <span>Upload CSV File!</span>
+                        <span>Upload CSV File</span>
                     </CSVReader>
                 </StyledReader>
+                <CSVLink data={exampleFile} filename={"example.csv"}>
+                    Example CSV
+                </CSVLink>
                 <button type="submit" onSubmit={onSubmit} disabled={!file} className={!file ? 'disabled' : null}>Analyze</button>
                 <button type="button" onClick={getExampleData}>Test</button>
             </form>
