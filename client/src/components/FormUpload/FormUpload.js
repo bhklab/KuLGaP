@@ -55,7 +55,6 @@ const StyledForm = styled.div`
                 color: white;
 			}
         }
-        CSV
 	}
 `;
 
@@ -71,6 +70,17 @@ const StyledReader = styled.div`
     }
     div {
         border-width: 0px !important;
+    }
+`
+
+const StyleLink = styled.div`
+    a:link {
+        text-decoration: none;
+        color: ${colors.main};
+        font-size: 12px;
+        &:hover {
+            color: ${colors.tussock}
+        }
     }
 `
 
@@ -216,9 +226,11 @@ const UploadForm = () => {
                         <span>Upload CSV File</span>
                     </CSVReader>
                 </StyledReader>
-                <CSVLink data={exampleFile} filename={"example.csv"}>
-                    Example CSV
-                </CSVLink>
+                <StyleLink>
+                    <CSVLink data={exampleFile} filename={"example.csv"}>
+                        (Download Example File)
+                    </CSVLink>
+                </StyleLink>
                 <button type="submit" onSubmit={onSubmit} disabled={!file} className={!file ? 'disabled' : null}>Analyze</button>
                 <button type="button" onClick={getExampleData}>Test</button>
             </form>
