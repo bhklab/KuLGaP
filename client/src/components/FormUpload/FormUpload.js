@@ -91,16 +91,17 @@ function UploadForm() {
             axios.post('/api/upload', data, {})
                 .then((res) => {
                     // setFile(null);
-                    setAnalysisState({ data: res.data, loading: false });
+                    console.log(res);
+                    // setAnalysisState({ data: res.data, loading: false });
                 })
                 .catch((err) => {
                     console.log(err.response);
                     // setFile(null);
                     if (err.response.status >= 400) {
                         const { message } = err.response.data;
-                        setAnalysisState({ data: null, loading: false, error: message });
+                        // setAnalysisState({ data: null, loading: false, error: message });
                     } else {
-                        setAnalysisState({ data: null, loading: false, error: 'Something went wrong' });
+                        // setAnalysisState({ data: null, loading: false, error: 'Something went wrong' });
                     }
                 });
         }
@@ -187,6 +188,13 @@ function UploadForm() {
                 handleOnDrop(results.data, false)
             }
         })
+
+        axios.get('/api/example')
+            .then((res) => {
+                const response = JSON.parse(res.data)
+                console.log(response);
+                // setAnalysisState({ data: response, loading: false });
+            });
     };
 
     console.log("Selected File is ", file);
