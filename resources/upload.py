@@ -1,7 +1,9 @@
-
+import io
+import werkzeug
+import pandas as pd
 from flask import Flask, request
 from flask_restful import Resource, reqparse
-import werkzeug
+from kulgap.io import read_pdx_from_byte_stream
 
 # # Route that is used to communicate with the package
 class Upload(Resource):
@@ -16,5 +18,7 @@ class Upload(Resource):
       # converts uploaded file to string
       file = args['file']
       csv_byte_stream = file.stream.read()
-      print(csv_byte_stream)
-      return "Success", 200
+      output = read_pdx_from_byte_stream(csv_byte_stream)
+      print(output)
+      print(type(output))
+      return output, 200
