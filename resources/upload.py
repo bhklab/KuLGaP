@@ -1,16 +1,17 @@
 import io
+import json
 import werkzeug
 import pandas as pd
 from flask import Flask, request
 from flask_restful import Resource, reqparse
-from kulgap.io import read_pdx_from_byte_stream
+from kulgap.io import byte_stream_to_stats_json
 
 # # Route that is used to communicate with the package
 class Upload(Resource):
     def get(self):
       return "Only POST method allowed for this route", 400
     def post(self):
-      print("POST")
+      print("Running Analysis on Uploaded CSV File")
       parse = reqparse.RequestParser()
       parse.add_argument(
           'file', type=werkzeug.datastructures.FileStorage, location='files')
@@ -18,7 +19,7 @@ class Upload(Resource):
       # converts uploaded file to string
       file = args['file']
       csv_byte_stream = file.stream.read()
-      output = read_pdx_from_byte_stream(csv_byte_stream)
+      print(csv_byte_stream)
+      output = byte_stream_to_stats_json(csv_byte_stream, orient='records')
       print(output)
-      print(type(output))
-      return output, 200
+      return json.loads(output), 200
