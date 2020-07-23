@@ -1,7 +1,5 @@
-import io
 import json
 import werkzeug
-import pandas as pd
 from flask import Flask, request
 from flask_restful import Resource, reqparse
 from kulgap.io import byte_stream_to_stats_json
