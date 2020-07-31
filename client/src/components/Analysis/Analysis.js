@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
@@ -9,9 +9,8 @@ import TumorGrowthCurve from '../GrowthCurve/TumorGrowthCurve';
 
 const StyledAnalysis = styled.div`
   width: 100%;
-  display:flex;
-  flex-direction:column;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
 
   .analysis-header {
     color: ${colors.main};
@@ -25,12 +24,16 @@ const StyledAnalysis = styled.div`
     width: 100%;
     background-color: white;
     border-radius: 25px;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 40px;
     margin-bottom: 30px;
-    // align-items: center;
+
+    svg {
+      display: flex;
+      margin: auto;
+    }
   }
 `;
 
@@ -40,6 +43,8 @@ function Analysis(props) {
 
     // later we can change it to render conditionally only when data is present
     // if not we can add a loading component
+
+    console.log('API DATA', data);
 
     return (
         <StyledAnalysis>
