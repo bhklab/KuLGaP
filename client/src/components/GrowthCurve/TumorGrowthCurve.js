@@ -309,7 +309,6 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('y', (d, i) => height / 2 - 45 + (i * 50))
         .text((d, i) => expTypes[i]);
 
-
     // set domain and range scaling
     const xrange = d3.scaleLinear()
         .domain([0, minmax.maxTime])
@@ -442,7 +441,6 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .data(meanVolume)
                 .enter();
 
-
             const linepath = d3.line()
                 .x((d, i) => xrange(timeUnion[n][i]))
                 .y((d, i) => yrange(meanVolume[i]));
@@ -480,7 +478,6 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
     const paths = graph.selectAll('.model-path')
         .data(() => data)
         .enter();
-
 
     // line function, to join dots
     const linepath = d3.line()
@@ -845,7 +842,6 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
     });
 };
 
-
 // main function to plot the growth curve.
 const TumorGrowthCurve = (props) => {
     const { patientParam, drugParam, data } = props;
@@ -866,22 +862,19 @@ const TumorGrowthCurve = (props) => {
         }
     });
 
-
     return (
         <div>
             <div style={{ marginTop: '50px' }}>
                 <svg id="svg-curve" width={900} height={620} />
-            </div>`
+            </div>
         </div>
     );
 };
-
 
 TumorGrowthCurve.propTypes = {
     patientParam: PropTypes.string.isRequired,
     drugParam: PropTypes.string.isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
 
 export default TumorGrowthCurve;
