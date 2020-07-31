@@ -5,8 +5,9 @@ import AnalysisContext from '../Context/AnalysisContext';
 import logo from '../../images/logo.png';
 
 function Home() {
-    const [analysisState, setAnalysisState] = useState({ data: null, loading: false });
+    const [analysisState, setAnalysisState] = useState({ data: null, summary: null, loading: false, error: null });
     const { data, loading } = analysisState;
+    console.log(analysisState);
     return (
         <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
             <main className="home-form">

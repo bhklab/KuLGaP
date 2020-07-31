@@ -85,11 +85,11 @@ const StyleLink = styled.div`
 `
 
 const UploadForm = () => {
-    const [uploadResult, setUploadResult] = useState({ data: null, loading: false, error: null });
+    // const [uploadResult, setUploadResult] = useState({ data: null, loading: false, error: null });
     const [file, setFile] = useState(null);
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
-    const { loading } = analysisState;
+    const { loading, error, data, summary } = analysisState;
     const [ exampleFile, setExampleFile ] = useState([]);
 
     // to set the example file on the initial render.
@@ -106,23 +106,21 @@ const UploadForm = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (file) {
-            setAnalysisState({ data: null, loading: true });
+            setAnalysisState({ ...analysisState, loading: true, summary: null, error: null });
             const data = new FormData();
             data.append('file', file);
             axios.post('/api/upload', data, {})
                 .then((res) => {
-                    // setFile(null);
-                    console.log(res);
-                    // setAnalysisState({ data: res.data, loading: false });
+                    console.log(res.data[0]);
+                    setAnalysisState({ ...analysisState, summmary: res.data[0], loading: false });
                 })
                 .catch((err) => {
                     console.log(err.response);
-                    // setFile(null);
                     if (err.response.status >= 400) {
                         const { message } = err.response.data;
-                        // setAnalysisState({ data: null, loading: false, error: message });
+                        setAnalysisState({ ...analysisState, summary: null, loading: false, error: message });
                     } else {
-                        // setAnalysisState({ data: null, loading: false, error: 'Something went wrong' });
+                        setAnalysisState({ ...analysisState, summary: null, loading: false, error: 'Something went wrong' });
                     }
                 });
         }
@@ -188,7 +186,7 @@ const UploadForm = () => {
                 })
             }
         })
-        setAnalysisState({ data: modifiedData, loading: false });
+        setAnalysisState({ ...analysisState, data: modifiedData });
     }
     
     const handleOnError = (err, file, inputElem, reason) => {
@@ -242,7 +240,7 @@ const UploadForm = () => {
                 <button type="submit" onSubmit={onSubmit} disabled={!file} className={!file ? 'disabled' : null}>Analyze</button>
                 <button type="button" onClick={getExampleData}>Test</button>
             </form>
-            {uploadResult.error ? <p className="error">{uploadResult.error}</p> : null}
+            {error ? <p className="error">{error}</p> : null}
         </StyledForm>
 
     );
