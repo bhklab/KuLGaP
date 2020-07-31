@@ -48,9 +48,9 @@ function Analysis(props) {
                 <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
             { summary ? (
-              <div className="container">
-                <Summary data={summary}/>
-              </div>
+                <div className="container">
+                    <Summary data={summary} />
+                </div>
             ) : null}
             <div className="container">
                 <BatchStatsTable />

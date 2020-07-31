@@ -864,9 +864,7 @@ const TumorGrowthCurve = (props) => {
 
     return (
         <div>
-            <div style={{ marginTop: '50px' }}>
-                <svg id="svg-curve" width={900} height={620} />
-            </div>
+            <svg id="svg-curve" width={900} height={620} />
         </div>
     );
 };
