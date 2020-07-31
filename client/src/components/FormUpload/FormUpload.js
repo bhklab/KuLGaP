@@ -112,7 +112,7 @@ const UploadForm = () => {
             axios.post('/api/upload', data, {})
                 .then((res) => {
                     console.log(res.data[0]);
-                    setAnalysisState({ ...analysisState, showResults: true, summmary: res.data[0], loading: false });
+                    setAnalysisState({ ...analysisState, showResults: true, summary: res.data[0], loading: false });
                 })
                 .catch((err) => {
                     console.log(err.response);
