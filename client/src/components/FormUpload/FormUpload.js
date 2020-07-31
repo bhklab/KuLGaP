@@ -106,13 +106,13 @@ const UploadForm = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (file) {
-            setAnalysisState({ ...analysisState, loading: true, summary: null, error: null });
+            setAnalysisState({ ...analysisState, showResults: false, loading: true, summary: null, error: null });
             const data = new FormData();
             data.append('file', file);
             axios.post('/api/upload', data, {})
                 .then((res) => {
                     console.log(res.data[0]);
-                    setAnalysisState({ ...analysisState, summmary: res.data[0], loading: false });
+                    setAnalysisState({ ...analysisState, showResults: true, summmary: res.data[0], loading: false });
                 })
                 .catch((err) => {
                     console.log(err.response);
@@ -186,7 +186,11 @@ const UploadForm = () => {
                 })
             }
         })
-        setAnalysisState({ ...analysisState, data: modifiedData });
+        setAnalysisState({ 
+            ...analysisState,
+            // decides whether to wait for API summary or display existing data
+            showResults: !isDrop,
+            data: modifiedData });
     }
     
     const handleOnError = (err, file, inputElem, reason) => {
@@ -214,8 +218,6 @@ const UploadForm = () => {
                 // setAnalysisState({ data: response, loading: false });
             });
     };
-
-    console.log("Selected File is ", file);
 
     return (
         <StyledForm>
