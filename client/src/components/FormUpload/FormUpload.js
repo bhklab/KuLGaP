@@ -5,6 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
+import exampleSummary from '../../data/api-test.json'
 
 
 const StyledForm = styled.div`
@@ -90,16 +91,16 @@ const UploadForm = () => {
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
     const { loading, error, data, summary } = analysisState;
-    const [ exampleFile, setExampleFile ] = useState([]);
+    const [exampleFile, setExampleFile] = useState([]);
 
     // to set the example file on the initial render.
     useEffect(() => {
-            readRemoteFile('example.csv', {
-                download: true,
-                complete: (results) => {
-                    setExampleFile(results.data);
-                }
-            })
+        readRemoteFile('example.csv', {
+            download: true,
+            complete: (results) => {
+                setExampleFile(results.data);
+            }
+        })
     }, [])
 
     // uploads csv file for analysis
@@ -133,7 +134,7 @@ const UploadForm = () => {
     };
 
 
-    const handleOnDrop = (data, isDrop, file) => {
+    const handleOnDrop = (data, isDrop, summary, file) => {
         const csvFile = file;
         // cancelled
         if (csvFile !== undefined) {
@@ -142,17 +143,17 @@ const UploadForm = () => {
 
         let modifiedData = [];
         data.forEach((row, i) => {
-            if(!i) {
+            if (!i) {
                 const row_data = isDrop ? row.data : row
                 row_data.forEach((value, j) => {
                     let count = 0;
-                    if(value.match(/(Control|Treatment)/g)) {
+                    if (value.match(/(Control|Treatment)/g)) {
                         modifiedData.push({
                             batch: 'unknown',
-                            drug: value === 'Control' ? 'WATER': 'unknown',
+                            drug: value === 'Control' ? 'WATER' : 'unknown',
                             exp_type: value.toLowerCase(),
                             model: `unknown${j}`,
-                            pdx_json : [],
+                            pdx_json: [],
                             pdx_points: [{
                                 times: [],
                                 volumes: [],
@@ -165,11 +166,11 @@ const UploadForm = () => {
                 let time = 0;
                 let count = 0;
                 const row_data = isDrop ? row.data : row
-                row_data.forEach((value, i)=> {
-                    if(!i) {
+                row_data.forEach((value, i) => {
+                    if (!i) {
                         time = Number(value);
                     }
-                    else if(value !== '') {
+                    else if (value !== '') {
                         modifiedData[count]['pdx_json'].push({
                             batch: 'unknown',
                             time: Number(time),
@@ -181,23 +182,25 @@ const UploadForm = () => {
                         modifiedData[count]['pdx_points'][0]['times'].push(Number(time));
                         modifiedData[count]['pdx_points'][0]['volumes'].push(Number(value));
                         modifiedData[count]['pdx_points'][0]['volume_normals'].push(0);
-                        count ++;
+                        count++;
                     }
                 })
             }
         })
-        setAnalysisState({ 
+        setAnalysisState({
             ...analysisState,
             // decides whether to wait for API summary or display existing data
-            showResults: !isDrop,
-            data: modifiedData });
+            showResults: true,
+            summary,
+            data: modifiedData
+        });
     }
-    
+
     const handleOnError = (err, file, inputElem, reason) => {
         console.log(err)
         setFile(null);
     }
-    
+
     const handleOnRemoveFile = (data) => {
         setFile(null);
     }
@@ -207,7 +210,8 @@ const UploadForm = () => {
         readRemoteFile('example.csv', {
             download: true,
             complete: (results) => {
-                handleOnDrop(results.data, false)
+                handleOnDrop(results.data, false, exampleSummary)
+
             }
         })
 
@@ -225,11 +229,11 @@ const UploadForm = () => {
                 <StyledReader>
                     <CSVReader
                         ref={fileRef}
-                        onDrop={(data, file) => handleOnDrop(data, true, file)}
+                        onDrop={(data, file) => handleOnDrop(data, true, null, file)}
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
-                        style={{'border-width': '0px !important'}}
+                        style={{ 'border-width': '0px !important' }}
                     >
                         <span>Upload CSV File</span>
                     </CSVReader>
