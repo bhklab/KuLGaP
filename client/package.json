@@ -13,6 +13,7 @@
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-ga": "^3.1.2",
+    "react-loading": "^2.0.3",
     "react-papaparse": "^3.4.0",
     "react-scripts": "3.4.1",
     "react-table-v6": "^6.8.6",

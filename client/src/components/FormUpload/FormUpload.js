@@ -13,7 +13,7 @@ const StyledForm = styled.div`
     width: 60%;
     min-width: 300px;
     height: 100%;
-    margin: 50px 0px 80px 0px;
+    margin: 50px 0px 30px 0px;
     padding: 20px;
     display: flex;
     flex-direction: column;

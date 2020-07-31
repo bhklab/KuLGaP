@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import FormUpload from '../FormUpload/FormUpload';
 import Analysis from '../Analysis/Analysis';
 import AnalysisContext from '../Context/AnalysisContext';
+import LoadingComponent from '../utils/Loading'
 import logo from '../../images/logo.png';
 
 function Home() {
@@ -20,7 +21,7 @@ function Home() {
                     <Fragment>
                         {showResults ? <Analysis /> : <div/>}
                     </Fragment>
-                ) : null }
+                ) : <LoadingComponent/>}
             </main>
         </AnalysisContext.Provider>
     );
