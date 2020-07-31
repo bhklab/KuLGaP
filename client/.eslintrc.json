@@ -50,6 +50,7 @@
         "react/jsx-indent-props": [
             "error",
             4
-        ]
+        ],
+        "no-console": "off"
     }
 }
