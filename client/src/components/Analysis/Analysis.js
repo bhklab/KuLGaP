@@ -6,7 +6,6 @@ import ModelStatsTable from './ModelStatsTable';
 import BatchStatsTable from './BatchStatsTable';
 import TumorGrowthCurve from '../GrowthCurve/TumorGrowthCurve';
 
-
 const StyledAnalysis = styled.div`
   width: 100%;
   display:flex;
@@ -30,13 +29,13 @@ const StyledAnalysis = styled.div`
     justify-content: center;
     padding: 40px;
     margin-bottom: 30px;
+    // align-items: center;
   }
 `;
 
 function Analysis(props) {
     const { analysisState } = useContext(AnalysisContext);
     const { data, loading } = analysisState;
-    
 
     // later we can change it to render conditionally only when data is present
     // if not we can add a loading component
@@ -47,13 +46,13 @@ function Analysis(props) {
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
-            	<TumorGrowthCurve data={data} patientParam={'unknown'} drugParam={'unknow'}/>
+                <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
             <div className="container">
-            	<BatchStatsTable/>
+                <BatchStatsTable />
             </div>
             <div className="container">
-            	<ModelStatsTable/>
+                <ModelStatsTable />
             </div>
         </StyledAnalysis>
     );

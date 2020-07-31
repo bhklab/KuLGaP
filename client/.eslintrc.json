@@ -51,6 +51,7 @@
             "error",
             4
         ],
-        "no-console": "off"
+        "no-console": "off",
+        "camelcase": "off"
     }
 }
