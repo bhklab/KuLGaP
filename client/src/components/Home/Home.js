@@ -2,12 +2,16 @@ import React, { useState, Fragment } from 'react';
 import FormUpload from '../FormUpload/FormUpload';
 import Analysis from '../Analysis/Analysis';
 import AnalysisContext from '../Context/AnalysisContext';
-import LoadingComponent from '../utils/Loading'
+import LoadingComponent from '../utils/Loading';
 import logo from '../../images/logo.png';
 
 function Home() {
-    const [analysisState, setAnalysisState] = useState({ data: null, summary: null, loading: false, error: null, showResults: false });
-    const { data, loading, summary, showResults } = analysisState;
+    const [analysisState, setAnalysisState] = useState({
+        data: null, summary: null, loading: false, error: null, showResults: false,
+    });
+    const {
+        data, loading, summary, showResults,
+    } = analysisState;
     console.log(analysisState);
     return (
         <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
@@ -18,10 +22,10 @@ function Home() {
                 <h2>KulGap description goes here</h2>
                 <FormUpload />
                 {!loading ? (
-                    <Fragment>
-                        {showResults ? <Analysis /> : <div/>}
-                    </Fragment>
-                ) : <LoadingComponent/>}
+                    <>
+                        {showResults ? <Analysis /> : <div />}
+                    </>
+                ) : <LoadingComponent />}
             </main>
         </AnalysisContext.Provider>
     );

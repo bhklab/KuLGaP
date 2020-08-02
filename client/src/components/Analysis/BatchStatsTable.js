@@ -1,5 +1,4 @@
 import React from 'react';
-import { data } from '../../data/batch_stats';
 import AnalysisTable from './AnalysisTable';
 
 const columns = [
@@ -25,6 +24,13 @@ const columns = [
     },
 ];
 
-const BatchStatsTable = () => <AnalysisTable data={data} columns={columns} type="batch" />;
+const parseData = (data) => [{
+    Batch: '',
+    TGI: data.tgi,
+    Angle: data.average_angle,
+    ABC: '',
+}];
+
+const BatchStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="batch" />;
 
 export default BatchStatsTable;

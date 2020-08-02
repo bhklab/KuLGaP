@@ -1,5 +1,5 @@
 import React from 'react';
-import { data } from '../../data/model_stats';
+// import { data } from '../../data/model_stats';
 import AnalysisTable from './AnalysisTable';
 
 const columns = [
@@ -69,6 +69,6 @@ const parseData = (data) => {
     return newData;
 };
 
-const ModelStatsTable = () => <AnalysisTable data={parseData(data)} columns={columns} type="model" />;
+const ModelStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="model" />;
 
 export default ModelStatsTable;

@@ -52,16 +52,16 @@ function Analysis(props) {
             <div className="container">
                 <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
-            { summary ? (
+            {/* { summary ? (
                 <div className="container">
                     <Summary data={summary} />
                 </div>
-            ) : null}
+            ) : null} */}
             <div className="container">
-                <BatchStatsTable />
+                <BatchStatsTable data={summary} />
             </div>
             <div className="container">
-                <ModelStatsTable />
+                <ModelStatsTable data={summary} />
             </div>
         </StyledAnalysis>
     );
