@@ -38,11 +38,11 @@ const columns = [
         accessor: 'AUC',
         minWidth: 170,
     },
-    {
-        Header: 'Survival (Days)',
-        accessor: 'survival',
-        minWidth: 170,
-    },
+    // {
+    //     Header: 'Survival (Days)',
+    //     accessor: 'survival',
+    //     minWidth: 170,
+    // },
 ];
 
 // const parseData = (data) => {
@@ -70,7 +70,6 @@ const columns = [
 // };
 
 const parseData = (data) => {
-    console.log(data);
     const newData = [];
     const cleanData = (value) => JSON.parse(JSON.stringify(value)).split('_').map((val) => val.replace(/[0-9].*:/, ''));
     cleanData(data.auc).forEach((val) => {
@@ -89,7 +88,9 @@ const parseData = (data) => {
             model: 'unknown',
         });
     });
-
+    cleanData(data.mRECIST).forEach((val, i) => {
+        newData[i].mRECIST = val.replace('m', '');
+    });
     return newData;
 };
 
