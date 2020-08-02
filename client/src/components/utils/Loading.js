@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactLoading from 'react-loading';
 import styled from 'styled-components';
-import colors from '../../styles/colors'
+import colors from '../../styles/colors';
 
 const StyledContainer = styled.div`
     display: flex;
@@ -17,13 +17,11 @@ const StyledContainer = styled.div`
     }
 `;
 
-const LoadingComponent = () => {
-  return (
+const LoadingComponent = () => (
     <StyledContainer>
-      <h3>Please wait, we are processing your data...</h3>
-      <ReactLoading type="spokes" width={150} height={150} color={colors.main} />
+        <h3>Please wait, we are processing your data...</h3>
+        <ReactLoading type="spokes" width={150} height={150} color={colors.main} />
     </StyledContainer>
-  )
-}
+);
 
 export default LoadingComponent;

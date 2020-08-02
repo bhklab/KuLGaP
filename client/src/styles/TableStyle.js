@@ -62,5 +62,4 @@ const TableWrapper = styled.div`
     }
 `;
 
-
 export default TableWrapper;

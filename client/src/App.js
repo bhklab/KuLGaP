@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Normalize } from 'styled-normalize';
-import GlobalStyles from './styles/GlobalStyles';
 import ReactGA from 'react-ga';
+import GlobalStyles from './styles/GlobalStyles';
 
 import Home from './components/Home/Home';
 
@@ -20,6 +20,6 @@ const App = () => {
             <Home />
         </div>
     );
-}
+};
 
 export default App;
