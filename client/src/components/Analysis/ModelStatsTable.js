@@ -1,5 +1,4 @@
 import React from 'react';
-// import { data } from '../../data/model_stats';
 import AnalysisTable from './AnalysisTable';
 
 const columns = [

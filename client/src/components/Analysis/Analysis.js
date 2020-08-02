@@ -4,7 +4,6 @@ import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
 import ModelStatsTable from './ModelStatsTable';
 import BatchStatsTable from './BatchStatsTable';
-import Summary from './Summary';
 import TumorGrowthCurve from '../GrowthCurve/TumorGrowthCurve';
 
 const StyledAnalysis = styled.div`
@@ -37,7 +36,7 @@ const StyledAnalysis = styled.div`
   }
 `;
 
-function Analysis(props) {
+function Analysis() {
     const { analysisState } = useContext(AnalysisContext);
     const { data, summary } = analysisState;
 
@@ -52,11 +51,6 @@ function Analysis(props) {
             <div className="container">
                 <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
-            {/* { summary ? (
-                <div className="container">
-                    <Summary data={summary} />
-                </div>
-            ) : null} */}
             <div className="container">
                 <BatchStatsTable data={summary} />
             </div>
