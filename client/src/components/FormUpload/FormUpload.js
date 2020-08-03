@@ -237,7 +237,7 @@ const UploadForm = () => {
                 <StyledReader>
                     <CSVReader
                         ref={fileRef}
-                        onDrop={(data, file) => handleOnDrop(data, true, null, file)}
+                        onDrop={(data, file) => handleOnDrop(data, true, exampleSummary, file)}
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
