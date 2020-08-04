@@ -66,10 +66,10 @@ const StyledReader = styled.div`
     color: white;
     border-radius: 20px;
     font-weight: 600;
+    font-size: 14px;
     &:hover {
         background: white;
         color: ${colors.main};
-        font-size: 14px;
     }
     div {
         border-width: 0px !important;
@@ -87,15 +87,61 @@ const StyleLink = styled.div`
     }
 `;
 
+// onverts parsed csv data from paparse library to proper format
+const processData = (data, isDrop) => {
+    const output = [];
+    data.forEach((row, i) => {
+        if (!i) {
+            const row_data = isDrop ? row.data : row;
+            row_data.forEach((value, j) => {
+                if (value.match(/(Control|Treatment)/g)) {
+                    output.push({
+                        batch: 'unknown',
+                        drug: value === 'Control' ? 'WATER' : 'unknown',
+                        exp_type: value.toLowerCase(),
+                        model: `unknown${j}`,
+                        pdx_json: [],
+                        pdx_points: [{
+                            times: [],
+                            volumes: [],
+                            volume_normals: [],
+                        }],
+                    });
+                }
+            });
+        } else {
+            let time = 0;
+            let count = 0;
+            const row_data = isDrop ? row.data : row;
+            row_data.forEach((value, i) => {
+                if (!i) {
+                    time = Number(value);
+                } else if (value !== '') {
+                    output[count].pdx_json.push({
+                        batch: 'unknown',
+                        time: Number(time),
+                        volume: Number(value),
+                        volume_normal: 0,
+                        model: output[count].model,
+                        exp_type: output[count].exp_type,
+                    });
+                    output[count].pdx_points[0].times.push(Number(time));
+                    output[count].pdx_points[0].volumes.push(Number(value));
+                    output[count].pdx_points[0].volume_normals.push(0);
+                    count++;
+                }
+            });
+        }
+    });
+    return output
+}
+
 const UploadForm = () => {
-    // const [uploadResult, setUploadResult] = useState({ data: null, loading: false, error: null });
-    const [file, setFile] = useState(null);
+    const [ csvFile, setCsvFile ] = useState(null);
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
-    const {
-        loading, error, data, summary,
-    } = analysisState;
-    const [exampleFile, setExampleFile] = useState([]);
+    const { error, summary } = analysisState;
+    const [ exampleFile, setExampleFile ] = useState([]);
 
     // to set the example file on the initial render.
     useEffect(() => {
@@ -110,108 +156,58 @@ const UploadForm = () => {
     // uploads csv file for analysis
     const onSubmit = (e) => {
         e.preventDefault();
-        if (file) {
+        if (csvFile) {
             setAnalysisState({
-                ...analysisState, showResults: false, loading: true, summary: null, error: null,
+                ...analysisState, loading: true, summary: null, error: null,
             });
             const data = new FormData();
-            data.append('file', file);
+            data.append('file', csvFile);
             axios.post('/api/upload', data, {})
                 .then((res) => {
-                    console.log(res.data[0]);
+                    // updates summaru section of the context state, parsed csvData stays the same
                     setAnalysisState({
-                        ...analysisState, showResults: true, summary: res.data[0], loading: false,
+                        ...analysisState, summary: res.data[0], loading: false,
                     });
                 })
                 .catch((err) => {
+                    // displays error message if request is unsuccessful
                     console.log(err.response);
                     if (err.response.status >= 400) {
                         const { message } = err.response.data;
                         setAnalysisState({
-                            ...analysisState, summary: null, loading: false, error: message,
+                            ...analysisState, loading: false, error: message,
                         });
                     } else {
                         setAnalysisState({
-                            ...analysisState, summary: null, loading: false, error: 'Something went wrong',
+                            ...analysisState, loading: false, error: 'Something went wrong',
                         });
-                    }
-                });
-        }
-    };
-
-    // for styling the file input
-    const openFileOption = () => {
-        fileRef.current.click();
-    };
-
-    const handleOnDrop = (data, isDrop, summary, file) => {
-        const csvFile = file;
-        // cancelled
-        if (csvFile !== undefined) {
-            setFile(csvFile);
-        }
-
-        const modifiedData = [];
-        data.forEach((row, i) => {
-            if (!i) {
-                const row_data = isDrop ? row.data : row;
-                row_data.forEach((value, j) => {
-                    const count = 0;
-                    if (value.match(/(Control|Treatment)/g)) {
-                        modifiedData.push({
-                            batch: 'unknown',
-                            drug: value === 'Control' ? 'WATER' : 'unknown',
-                            exp_type: value.toLowerCase(),
-                            model: `unknown${j}`,
-                            pdx_json: [],
-                            pdx_points: [{
-                                times: [],
-                                volumes: [],
-                                volume_normals: [],
-                            }],
-                        });
-                    }
-                });
-            } else {
-                let time = 0;
-                let count = 0;
-                const row_data = isDrop ? row.data : row;
-                row_data.forEach((value, i) => {
-                    if (!i) {
-                        time = Number(value);
-                    } else if (value !== '') {
-                        modifiedData[count].pdx_json.push({
-                            batch: 'unknown',
-                            time: Number(time),
-                            volume: Number(value),
-                            volume_normal: 0,
-                            model: modifiedData[count].model,
-                            exp_type: modifiedData[count].exp_type,
-                        });
-                        modifiedData[count].pdx_points[0].times.push(Number(time));
-                        modifiedData[count].pdx_points[0].volumes.push(Number(value));
-                        modifiedData[count].pdx_points[0].volume_normals.push(0);
-                        count++;
                     }
                 });
             }
-        });
+    };
+
+    const handleOnDrop = (data, file, summary, isDrop ) => {
+        // updates csvFile variable if 'file' arg is passed
+        if (file !== undefined) {
+            setCsvFile(file);
+        }
+
+        const modifiedData = processData(data, isDrop);
+
         setAnalysisState({
             ...analysisState,
-            // decides whether to wait for API summary or display existing data
-            showResults: true,
             summary,
             data: modifiedData,
         });
     };
 
-    const handleOnError = (err, file, inputElem, reason) => {
+    const handleOnError = (err) => {
         console.log(err);
-        setFile(null);
+        setCsvFile(null);
     };
 
-    const handleOnRemoveFile = (data) => {
-        setFile(null);
+    const handleOnRemoveFile = () => {
+        setCsvFile(null);
     };
 
     // retrieves example data from the backend
@@ -219,16 +215,11 @@ const UploadForm = () => {
         readRemoteFile('example.csv', {
             download: true,
             complete: (results) => {
-                handleOnDrop(results.data, false, exampleSummary);
+                // runs handleOnDrop function with parsed csv data and example summary from json
+                // no actual file is being passed this way
+                handleOnDrop(results.data, null, exampleSummary, false);
             },
         });
-
-        axios.get('/api/example')
-            .then((res) => {
-                const response = JSON.parse(res.data);
-                console.log(response);
-                // setAnalysisState({ data: response, loading: false });
-            });
     };
 
     return (
@@ -237,26 +228,29 @@ const UploadForm = () => {
                 <StyledReader>
                     <CSVReader
                         ref={fileRef}
-                        onDrop={(data, file) => handleOnDrop(data, true, exampleSummary, file)}
+                        // actual file drop, summary data is set to null
+                        // (summary will be updated later when API returns data)
+                        onDrop={(data, file) => handleOnDrop(data, file, null, true )}
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
-                        style={{ 'border-width': '0px !important' }}
+                        style={{ 'borderWidth': '0px !important' }}
                     >
                         <span>Upload CSV File</span>
                     </CSVReader>
                 </StyledReader>
                 <StyleLink>
-                    <CSVLink data={exampleFile} filename="example.csv">
+                    <CSVLink
+                     data={exampleFile}
+                      filename="example.csv">
                         (Download Example File)
                     </CSVLink>
                 </StyleLink>
-                <button type="submit" onSubmit={onSubmit} disabled={!file} className={!file ? 'disabled' : null}>Analyze</button>
+                <button type="submit" onSubmit={onSubmit} disabled={!csvFile} className={!csvFile ? 'disabled' : null}>Analyze</button>
                 <button type="button" onClick={getExampleData}>Test</button>
             </form>
             {error ? <p className="error">{error}</p> : null}
         </StyledForm>
-
     );
 };
 

@@ -40,11 +40,6 @@ function Analysis() {
     const { analysisState } = useContext(AnalysisContext);
     const { data, summary } = analysisState;
 
-    // later we can change it to render conditionally only when data is present
-    // if not we can add a loading component
-
-    console.log('API DATA', data);
-
     return (
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>

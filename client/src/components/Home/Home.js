@@ -7,12 +7,11 @@ import logo from '../../images/logo.png';
 
 function Home() {
     const [analysisState, setAnalysisState] = useState({
-        data: null, summary: null, loading: false, error: null, showResults: false,
+        data: null, summary: null, loading: false, error: null
     });
     const {
-        data, loading, summary, showResults,
+        loading, summary
     } = analysisState;
-    console.log(analysisState);
     return (
         <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
             <main className="home-form">
@@ -23,7 +22,7 @@ function Home() {
                 <FormUpload />
                 {!loading ? (
                     <>
-                        {showResults ? <Analysis /> : <div />}
+                        {summary ? <Analysis /> : <div />}
                     </>
                 ) : <LoadingComponent />}
             </main>
