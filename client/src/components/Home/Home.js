@@ -19,7 +19,7 @@ function Home() {
                 <div className="header-container">
                     <img alt="logo" className="logo" src={logo} />
                 </div>
-                <h2>KulGap description goes here</h2>
+                <h3>Robust Quantification of Therapy Response in Xenografts</h3>
                 <FormUpload />
                 {!loading ? (
                     <>

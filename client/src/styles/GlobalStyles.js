@@ -1,27 +1,28 @@
 import { createGlobalStyle } from 'styled-components';
 import colors from './colors';
-import transitions from './transitions';
 import bgImg from '../images/bg.png';
 
 const GlobalStyles = createGlobalStyle`
+
+    h1, h2, h3 {
+        margin: 0;
+        color: ${colors.main};
+        font-family: 'Sen', sans-serif;
+        font-weight: 400;
+        text-align: center;
+    }
   
     h1 {
-        margin: 0;
-        color: ${colors.main};
-        text-align:left;
+        text-align: left !important;
         font-size: calc(5vw + 5em);
         letter-spacing: 3px;
-        font-family: 'Sen', sans-serif;
-        font-weight: 400;
-        font-size: calc(5vw + 8em);
     }
     h2 {
-        color: ${colors.main};
-        font-family: 'Sen', sans-serif;
-        font-weight: 400;
         font-size: calc(1vw + 1.5em);
-        text-align: center;
-        margin: 0;
+    }
+    h3 {
+        margin-top: 15px !important;
+        font-size: calc(0.5vw + 1.5em);
     }
     main {
         width: 60%;
@@ -64,55 +65,12 @@ const GlobalStyles = createGlobalStyle`
             color: white;
         }
     }
+
     // plotly styling
     .js-plotly-plot {
         width: 100%;
     }
-    // react-table class styling
-    .ReactTable {
-        background:white;
-        color: ${colors.darkblue_text};
-        a {
-            color: ${colors.darkblue_text};
-            transition: ${transitions.main_trans};
-            &:hover {
-                color: ${colors.red_main};
-            }
-        }
-    }
-    
-    .table-header {
-        display:flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .arrow-container {
-        display:flex;
-        flex-direction:column;
-        justify-content: space-between;
-        height: 13px;
-        img {
-            width: 7px !important;
-        }
-    }
-    .-sort-asc {
-        box-shadow:none !important;
-        .up-arrow {
-            opacity:1;
-        }
-        .down-arrow {
-            opacity:0;
-        }
-    }
-    .-sort-desc {
-        box-shadow:none !important;
-        .up-arrow {
-            opacity:0;
-        }
-        .down-arrow {
-            opacity:1;
-        }
-    }
+
     #root {
         width: 100vw;
         min-height: 100vh;

@@ -7,6 +7,10 @@ const TableWrapper = styled.div`
 
     h3 {
         color:  ${colors.tussock};
+        text-align: left !important;
+        font-size: calc(0.4vw + 1.0em);
+        margin-top: 0px !important;
+        margin-bottom: 2px !important;
     }
 
     .ReactTable * {
