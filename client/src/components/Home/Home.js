@@ -7,24 +7,28 @@ import logo from '../../images/logo.png';
 
 function Home() {
     const [analysisState, setAnalysisState] = useState({
-        data: null, summary: null, loading: false, error: null
+        data: null, summary: null, loading: false, error: null,
     });
     const {
-        loading, summary
+        loading, summary,
     } = analysisState;
     return (
         <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
             <main className="home-form">
                 <div className="header-container">
-                    <img alt="logo" className="logo" src={logo} />
+                    <a href="https://www.kulgap.ca" target="_blank" rel="noreferrer">
+                        <img alt="logo" className="logo" src={logo} />
+                    </a>
                 </div>
-                <h3>Robust Quantification of Therapy Response in Xenografts</h3>
+                <h3> Robust Quantification of Therapy Response in Xenografts </h3>
                 <FormUpload />
-                {!loading ? (
-                    <>
-                        {summary ? <Analysis /> : <div />}
-                    </>
-                ) : <LoadingComponent />}
+                {
+                    !loading ? (
+                        <>
+                            {summary ? <Analysis /> : <div />}
+                        </>
+                    ) : <LoadingComponent />
+                }
             </main>
         </AnalysisContext.Provider>
     );

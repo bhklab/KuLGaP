@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTable from 'react-table-v6';
 import AnalysisTable from './AnalysisTable';
 
 const columns = [
