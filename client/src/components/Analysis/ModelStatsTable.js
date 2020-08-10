@@ -3,11 +3,6 @@ import AnalysisTable from './AnalysisTable';
 
 const columns = [
     {
-        Header: 'Patient',
-        accessor: 'patient',
-        minWidth: 170,
-    },
-    {
         Header: 'Model',
         accessor: 'model',
         minWidth: 170,
@@ -73,7 +68,7 @@ const parseData = (data) => {
     const cleanData = (value) => JSON.parse(JSON.stringify(value)).split('_').map((val) => val.replace(/[0-9].*:/, ''));
     cleanData(data.auc).forEach((val) => {
         newData.push({
-            AUC: val,
+            AUC: Number(val).toFixed(4),
             drug: data.drug,
             patient: 'unknown',
             model: 'unknown',
@@ -81,7 +76,7 @@ const parseData = (data) => {
     });
     cleanData(data.auc_control).forEach((val) => {
         newData.push({
-            AUC: val,
+            AUC: Number(val).toFixed(4),
             drug: 'control',
             patient: 'unknown',
             model: 'unknown',

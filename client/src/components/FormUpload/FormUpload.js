@@ -133,15 +133,15 @@ const processData = (data, isDrop) => {
             });
         }
     });
-    return output
-}
+    return output;
+};
 
 const UploadForm = () => {
-    const [ csvFile, setCsvFile ] = useState(null);
+    const [csvFile, setCsvFile] = useState(null);
     const fileRef = useRef(null);
     const { analysisState, setAnalysisState } = useContext(AnalysisContext);
     const { error, summary } = analysisState;
-    const [ exampleFile, setExampleFile ] = useState([]);
+    const [exampleFile, setExampleFile] = useState([]);
 
     // to set the example file on the initial render.
     useEffect(() => {
@@ -183,10 +183,10 @@ const UploadForm = () => {
                         });
                     }
                 });
-            }
+        }
     };
 
-    const handleOnDrop = (data, file, summary, isDrop ) => {
+    const handleOnDrop = (data, file, summary, isDrop) => {
         // updates csvFile variable if 'file' arg is passed
         if (file !== undefined) {
             setCsvFile(file);
@@ -230,19 +230,20 @@ const UploadForm = () => {
                         ref={fileRef}
                         // actual file drop, summary data is set to null
                         // (summary will be updated later when API returns data)
-                        onDrop={(data, file) => handleOnDrop(data, file, null, true )}
+                        onDrop={(data, file) => handleOnDrop(data, file, null, true)}
                         onError={handleOnError}
                         addRemoveButton
                         onRemoveFile={handleOnRemoveFile}
-                        style={{ 'borderWidth': '0px !important' }}
+                        style={{ borderWidth: '0px !important' }}
                     >
                         <span>Upload CSV File</span>
                     </CSVReader>
                 </StyledReader>
                 <StyleLink>
                     <CSVLink
-                     data={exampleFile}
-                      filename="example.csv">
+                        data={exampleFile}
+                        filename="example.csv"
+                    >
                         (Download Example File)
                     </CSVLink>
                 </StyleLink>

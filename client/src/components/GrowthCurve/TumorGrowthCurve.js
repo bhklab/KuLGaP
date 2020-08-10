@@ -847,6 +847,9 @@ const TumorGrowthCurve = (props) => {
     const { patientParam, drugParam, data } = props;
     const plotId = 'plot';
 
+    // removing the already created plot.
+    d3.select('#pdxplot').remove();
+
     // function will be triggered once the component is mounted/updated.
     useEffect(() => {
         if (data.length !== 0) {

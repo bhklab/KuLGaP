@@ -26,8 +26,8 @@ const columns = [
 
 const parseData = (data) => [{
     Batch: '',
-    TGI: data.tgi,
-    Angle: data.average_angle,
+    TGI: data.tgi.toFixed(4),
+    Angle: data.average_angle.toFixed(4),
     ABC: '',
 }];
 
