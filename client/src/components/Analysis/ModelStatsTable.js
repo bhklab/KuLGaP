@@ -5,32 +5,32 @@ const columns = [
     {
         Header: 'Model',
         accessor: 'model',
-        minWidth: 170,
+        minWidth: 100,
     },
     {
         Header: 'Drug',
         accessor: 'drug',
-        minWidth: 170,
+        minWidth: 100
     },
     {
         Header: 'mRECIST',
         accessor: 'mRECIST',
-        minWidth: 170,
+        minWidth: 120,
     },
     {
         Header: 'Best Average Response',
         accessor: 'bar',
-        minWidth: 170,
+        minWidth: 230,
     },
     {
         Header: 'Slope',
         accessor: 'slope',
-        minWidth: 170,
+        minWidth: 100,
     },
     {
         Header: 'AUC',
         accessor: 'AUC',
-        minWidth: 170,
+        minWidth: 100,
     },
     // {
     //     Header: 'Survival (Days)',
