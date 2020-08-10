@@ -3,34 +3,34 @@ import AnalysisTable from './AnalysisTable';
 
 const columns = [
     {
-        Header: 'Batch',
-        accessor: 'Batch',
+        Header: 'Key',
+        accessor: 'key',
         minWidth: 170,
     },
     {
-        Header: 'TGI',
-        accessor: 'TGI',
-        minWidth: 170,
-    },
-    {
-        Header: 'Angle',
-        accessor: 'Angle',
-        minWidth: 170,
-    },
-    {
-        Header: 'ABC',
-        accessor: 'ABC',
+        Header: 'Value',
+        accessor: 'value',
         minWidth: 170,
     },
 ];
 
-const parseData = (data) => [{
-    Batch: '',
-    TGI: data.tgi.toFixed(4),
-    Angle: data.average_angle.toFixed(4),
-    ABC: '',
-}];
+const parseData = (data) => [
+    {
+        key: 'TGI',
+        value: data.tgi.toFixed(4),
+    },
+    {
+        key: 'Angle',
+        value: data.average_angle.toFixed(4),
+    },
+    {
+        key: 'ABC',
+        value: '',
+    },
+];
 
-const BatchStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="batch" />;
+const TheadComponent = () => null; // a component returning null (to hide).
+
+const BatchStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="batch" TheadComponent={TheadComponent} />;
 
 export default BatchStatsTable;

@@ -4,22 +4,33 @@ import { PropTypes } from 'prop-types';
 import 'react-table-v6/react-table.css';
 import TableWrapper from '../../styles/TableStyle';
 
+const checkType = (type) => {
+    if (type === 'model') {
+        return <h3> Statistics (Model Response) </h3>;
+    }
+    if (type === 'batch') {
+        return <h3> Statistics (Batch Response) </h3>;
+    }
+    return <h3> Statistics </h3>;
+};
+
 const AnalysisTable = (props) => {
-    const { data, columns, type } = props;
+    const {
+        data, columns, type, TheadComponent,
+    } = props;
     return (
         <TableWrapper>
             {
-                type === 'model'
-                    ? <h3>Statistics (Model Response)</h3>
-                    : <h3>Statistics (Batch Response)</h3>
+                checkType(type)
             }
             <ReactTable
                 data={data}
                 columns={columns}
-                defaultPageSize={type === 'model' ? 10 : 2}
+                defaultPageSize={type === 'model' ? 10 : data.length}
                 className="-highlight"
                 filterable={type === 'model'}
                 showPagination={type === 'model'}
+                TheadComponent={TheadComponent}
             />
         </TableWrapper>
     );
@@ -27,12 +38,12 @@ const AnalysisTable = (props) => {
 
 // proptypes.
 AnalysisTable.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object),
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
     columns: PropTypes.arrayOf(PropTypes.shape({
         Header: PropTypes.string,
         accessor: PropTypes.string,
         minWidth: PropTypes.number,
-    })),
+    })).isRequired,
 };
 
 export default AnalysisTable;
