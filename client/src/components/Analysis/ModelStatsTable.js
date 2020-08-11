@@ -1,43 +1,7 @@
 import React from 'react';
 import AnalysisTable from './AnalysisTable';
 
-const columns = [
-    {
-        Header: 'Model',
-        accessor: 'model',
-        minWidth: 100,
-    },
-    {
-        Header: 'Drug',
-        accessor: 'drug',
-        minWidth: 100
-    },
-    {
-        Header: 'mRECIST',
-        accessor: 'mRECIST',
-        minWidth: 120,
-    },
-    {
-        Header: 'Best Average Response',
-        accessor: 'bar',
-        minWidth: 230,
-    },
-    {
-        Header: 'Slope',
-        accessor: 'slope',
-        minWidth: 100,
-    },
-    {
-        Header: 'AUC',
-        accessor: 'AUC',
-        minWidth: 100,
-    },
-    // {
-    //     Header: 'Survival (Days)',
-    //     accessor: 'survival',
-    //     minWidth: 170,
-    // },
-];
+
 
 // const parseData = (data) => {
 //     // this will create newData array of objects for the table.
@@ -88,6 +52,48 @@ const parseData = (data) => {
     return newData;
 };
 
-const ModelStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="model" />;
+const columns = [
+    {
+        Header: 'Drug',
+        accessor: 'drug',
+        minWidth: 100
+    },
+    {
+        Header: 'mRECIST',
+        accessor: 'mRECIST',
+        minWidth: 120,
+    },
+    {
+        Header: 'Best Average Response',
+        accessor: 'bar',
+        minWidth: 230,
+    },
+    {
+        Header: 'Slope',
+        accessor: 'slope',
+        minWidth: 100,
+    },
+    {
+        Header: 'AUC',
+        accessor: 'AUC',
+        minWidth: 100,
+    },
+    // {
+    //     Header: 'Survival (Days)',
+    //     accessor: 'survival',
+    //     minWidth: 170,
+    // },
+];
+
+const ModelStatsTable = ({ data }) => {
+    const tableData = parseData(data)
+    // adds model column if there is at least one known model
+    if (tableData.some(row => row.model === 'unknown')) columns.unshift({
+        Header: 'Model',
+        accessor: 'model',
+        minWidth: 100,
+    })
+    return (<AnalysisTable data={tableData} columns={columns} type="model" />)
+} 
 
 export default ModelStatsTable;
