@@ -1,8 +1,6 @@
 import React from 'react';
 import AnalysisTable from './AnalysisTable';
 
-
-
 // const parseData = (data) => {
 //     // this will create newData array of objects for the table.
 //     const newData = [];
@@ -56,7 +54,7 @@ const columns = [
     {
         Header: 'Drug',
         accessor: 'drug',
-        minWidth: 100
+        minWidth: 100,
     },
     {
         Header: 'mRECIST',
@@ -86,14 +84,16 @@ const columns = [
 ];
 
 const ModelStatsTable = ({ data }) => {
-    const tableData = parseData(data)
+    const tableData = parseData(data);
     // adds model column if there is at least one known model
-    if (tableData.some(row => row.model !== 'unknown')) columns.unshift({
-        Header: 'Model',
-        accessor: 'model',
-        minWidth: 100,
-    })
-    return (<AnalysisTable data={tableData} columns={columns} type="model" />)
-} 
+    if (tableData.some((row) => row.model !== 'unknown')) {
+        columns.unshift({
+            Header: 'Model',
+            accessor: 'model',
+            minWidth: 100,
+        });
+    }
+    return (<AnalysisTable data={tableData} columns={columns} type="model" />);
+};
 
 export default ModelStatsTable;

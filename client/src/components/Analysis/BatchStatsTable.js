@@ -6,6 +6,10 @@ const columns = [
         Header: 'Key',
         accessor: 'key',
         minWidth: 170,
+        style: {
+            fontSize: '16px',
+            fontWeight: '600',
+        },
     },
     {
         Header: 'Value',
