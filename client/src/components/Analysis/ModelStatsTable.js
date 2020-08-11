@@ -88,7 +88,7 @@ const columns = [
 const ModelStatsTable = ({ data }) => {
     const tableData = parseData(data)
     // adds model column if there is at least one known model
-    if (tableData.some(row => row.model === 'unknown')) columns.unshift({
+    if (tableData.some(row => row.model !== 'unknown')) columns.unshift({
         Header: 'Model',
         accessor: 'model',
         minWidth: 100,
