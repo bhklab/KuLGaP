@@ -14,7 +14,7 @@ const columns = [
         },
     },
     {
-        Header: 'p_value',
+        Header: 'p-value',
         accessor: 'p_value',
         minWidth: 120,
         style: {
