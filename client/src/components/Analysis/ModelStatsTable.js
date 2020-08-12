@@ -45,7 +45,6 @@ const parseData = (data) => {
     // BEST AVERAGE RESPONSE and BEST AVERAGE RESPONSE CONTROL.
     let z = 0;
     [data.lm_slopes_control, data.lm_slopes].forEach((element) => {
-        console.log(element);
         element.forEach((val) => {
             if (newData[z]) {
                 newData[z].slope = FixedPoint(val);

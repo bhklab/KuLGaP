@@ -87,9 +87,13 @@ const StyleLink = styled.div`
     }
 `;
 
+// function to calculate the normal volume.
+const normalVolume = (vol_array, value, i) => (value - vol_array[i]) / (vol_array[i]);
+
 // onverts parsed csv data from paparse library to proper format
 const processData = (data, isDrop) => {
     const output = [];
+    let volume_zero = [];
     data.forEach((row, i) => {
         if (!i) {
             const row_data = isDrop ? row.data : row;
@@ -113,21 +117,24 @@ const processData = (data, isDrop) => {
             let time = 0;
             let count = 0;
             const row_data = isDrop ? row.data : row;
-            row_data.forEach((value, i) => {
-                if (!i) {
+            if (i === 1) {
+                volume_zero = row_data;
+            }
+            row_data.forEach((value, j) => {
+                if (!j) {
                     time = Number(value);
                 } else if (value !== '') {
                     output[count].pdx_json.push({
                         batch: 'unknown',
                         time: Number(time),
                         volume: Number(value),
-                        volume_normal: 0,
+                        volume_normal: normalVolume(volume_zero, value, j),
                         model: output[count].model,
                         exp_type: output[count].exp_type,
                     });
                     output[count].pdx_points[0].times.push(Number(time));
                     output[count].pdx_points[0].volumes.push(Number(value));
-                    output[count].pdx_points[0].volume_normals.push(0);
+                    output[count].pdx_points[0].volume_normals.push(normalVolume(volume_zero, value, j));
                     count++;
                 }
             });
