@@ -8,9 +8,9 @@ const checkType = (type) => {
     if (type === 'model') {
         return <h3> Statistics (Model Response) </h3>;
     }
-    if (type === 'batch') {
-        return <h3> Statistics (Batch Response) </h3>;
-    }
+    // if (type === 'batch') {
+    //     return <h3> Statistics (Batch Response) </h3>;
+    // }
     return <h3> Statistics </h3>;
 };
 

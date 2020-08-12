@@ -4,7 +4,7 @@ import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
 import ModelStatsTable from './ModelStatsTable';
 import BatchStatsTable from './BatchStatsTable';
-import KulgapStatsTable from './KulgapStatsTable';
+// import KulgapStatsTable from './KulgapStatsTable';
 import TumorGrowthCurve from '../GrowthCurve/TumorGrowthCurve';
 
 const StyledAnalysis = styled.div`
@@ -44,9 +44,9 @@ function Analysis() {
     return (
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
-            <div className="container">
+            {/* <div className="container">
                 <KulgapStatsTable data={summary} />
-            </div>
+            </div> */}
             <div className="container">
                 <BatchStatsTable data={summary} />
             </div>

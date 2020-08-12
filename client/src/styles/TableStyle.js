@@ -34,14 +34,14 @@ const TableWrapper = styled.div`
 
     .ReactTable .rt-thead {
         color:  ${colors.main};
-        font-size: 18px;
+        font-size: calc(0.20vw + 1.0em);
         font-weight: 600;
         box-shadow:none !important;
     }
 
-    .ReactTable .rt-tbody{
+    .ReactTable .rt-tbody {
         color:  ${colors.main};
-        font-size: 16px;
+        font-size: calc(0.10vw + 1.0em);
         box-shadow:none !important;
     }
 
