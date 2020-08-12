@@ -265,7 +265,7 @@ const tumorCurve = (data, plotId, minmax) => {
     const width = 670;
     const height = 550;
     const margin = {
-        top: 50,
+        top: 10,
         right: 100,
         bottom: 250,
         left: 100,

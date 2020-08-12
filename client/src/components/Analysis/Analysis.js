@@ -27,7 +27,7 @@ const StyledAnalysis = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
+    padding: 30px;
     margin-bottom: 30px;
 
     svg {
@@ -45,9 +45,6 @@ function Analysis() {
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
-                <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
-            </div>
-            <div className="container">
                 <KulgapStatsTable data={summary} />
             </div>
             <div className="container">
@@ -55,6 +52,9 @@ function Analysis() {
             </div>
             <div className="container">
                 <ModelStatsTable data={summary} />
+            </div>
+            <div className="container">
+                <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
         </StyledAnalysis>
     );
