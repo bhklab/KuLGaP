@@ -1,12 +1,13 @@
 import React from 'react';
 import AnalysisTable from './AnalysisTable';
+import FixedPoint from '../utils/FixedPoint';
 
 const parseData = (data) => {
     const newData = [];
     const cleanData = (value) => JSON.parse(JSON.stringify(value)).split('_').map((val) => val.replace(/[0-9].*:/, ''));
     // AUC.
     Object.keys(data.auc).forEach((val) => {
-        const auc = Number(data.auc[val]).toFixed(4);
+        const auc = FixedPoint(data.auc[val]);
         newData.push({
             AUC: auc,
             drug: data.drug,
@@ -16,7 +17,7 @@ const parseData = (data) => {
     // AUC CONTROL.
     cleanData(data.auc_control).forEach((val) => {
         newData.push({
-            AUC: Number(val).toFixed(4),
+            AUC: FixedPoint(val),
             drug: 'control',
             model: 'unknown',
         });
@@ -24,15 +25,35 @@ const parseData = (data) => {
     // mRECIST and mRECIST CONTROL.
     let j = 0;
     [Object.keys(data.mRECIST), Object.keys(data.mRECIST_control)].forEach((element, i) => {
+        console.log(element);
         element.forEach((val) => {
-            const values = i === 1 ? data.mRECIST_control[val] : data.mRECIST[val];
+            const values = i ? data.mRECIST_control[val] : data.mRECIST[val];
             newData[j].mRECIST = values.replace('m', '');
             j++;
         });
     });
-    // BEST AVERAGE RESPONSE.
-    data.best_avg_response.forEach((val, i) => {
-        newData[i].bar = val;
+    // BEST AVERAGE RESPONSE and BEST AVERAGE RESPONSE CONTROL.
+    let k = 0;
+    [data.best_avg_response, data.best_avg_response_control].forEach((element) => {
+        console.log(element);
+        element.forEach((val) => {
+            if (newData[k]) {
+                newData[k].bar = val;
+                k++;
+            }
+        });
+    });
+    // SLOPES.
+    // BEST AVERAGE RESPONSE and BEST AVERAGE RESPONSE CONTROL.
+    let z = 0;
+    [data.lm_slopes_control, data.lm_slopes].forEach((element) => {
+        console.log(element);
+        element.forEach((val) => {
+            if (newData[z]) {
+                newData[z].slope = val;
+                z++;
+            }
+        });
     });
     return newData;
 };
@@ -63,11 +84,6 @@ const columns = [
         accessor: 'AUC',
         minWidth: 100,
     },
-    // {
-    //     Header: 'Survival (Days)',
-    //     accessor: 'survival',
-    //     minWidth: 170,
-    // },
 ];
 
 const ModelStatsTable = ({ data }) => {
