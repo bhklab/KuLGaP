@@ -1,5 +1,6 @@
 import React from 'react';
 import AnalysisTable from './AnalysisTable';
+import FixedPoint from '../utils/FixedPoint';
 
 const columns = [
     {
@@ -23,11 +24,11 @@ const TheadComponent = () => null; // a component returning null (to hide).
 const parseData = (data) => [
     {
         key: 'KuLGaP Stat',
-        value: data.kl,
+        value: FixedPoint(data.kl),
     },
     {
         key: 'p_value',
-        value: data.kl_p_value,
+        value: FixedPoint(data.kl_p_value),
     },
 ];
 

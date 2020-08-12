@@ -1,5 +1,6 @@
 import React from 'react';
 import AnalysisTable from './AnalysisTable';
+import FixedPoint from '../utils/FixedPoint';
 
 const columns = [
     {
@@ -21,11 +22,11 @@ const columns = [
 const parseData = (data) => [
     {
         key: 'TGI',
-        value: data.tgi.toFixed(4),
+        value: FixedPoint(data.tgi),
     },
     {
         key: 'Angle',
-        value: data.average_angle.toFixed(4),
+        value: FixedPoint(data.average_angle),
     },
     {
         key: 'ABC',

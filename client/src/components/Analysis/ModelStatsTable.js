@@ -25,7 +25,6 @@ const parseData = (data) => {
     // mRECIST and mRECIST CONTROL.
     let j = 0;
     [Object.keys(data.mRECIST), Object.keys(data.mRECIST_control)].forEach((element, i) => {
-        console.log(element);
         element.forEach((val) => {
             const values = i ? data.mRECIST_control[val] : data.mRECIST[val];
             newData[j].mRECIST = values.replace('m', '');
@@ -35,10 +34,9 @@ const parseData = (data) => {
     // BEST AVERAGE RESPONSE and BEST AVERAGE RESPONSE CONTROL.
     let k = 0;
     [data.best_avg_response, data.best_avg_response_control].forEach((element) => {
-        console.log(element);
         element.forEach((val) => {
             if (newData[k]) {
-                newData[k].bar = val;
+                newData[k].bar = FixedPoint(val);
                 k++;
             }
         });
@@ -50,7 +48,7 @@ const parseData = (data) => {
         console.log(element);
         element.forEach((val) => {
             if (newData[z]) {
-                newData[z].slope = val;
+                newData[z].slope = FixedPoint(val);
                 z++;
             }
         });
