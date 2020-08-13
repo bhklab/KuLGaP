@@ -8,7 +8,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
-import exampleSummary from '../../data/api-test.json';
+import exampleSummary1 from '../../data/api-test.json';
+import exampleSummary2 from '../../data/api-test-2.json';
 
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
@@ -219,13 +220,13 @@ const UploadForm = () => {
     };
 
     // retrieves example data from the backend
-    const getExampleData = () => {
-        readRemoteFile('example.csv', {
+    const getExampleData = (file, example) => {
+        readRemoteFile(file, {
             download: true,
             complete: (results) => {
                 // runs handleOnDrop function with parsed csv data and example summary from json
                 // no actual file is being passed this way
-                handleOnDrop(results.data, null, exampleSummary, false);
+                handleOnDrop(results.data, null, example, false);
             },
         });
     };
@@ -256,7 +257,8 @@ const UploadForm = () => {
                     </CSVLink>
                 </StyleLink>
                 <button type="submit" onSubmit={onSubmit} disabled={!csvFile} className={!csvFile ? 'disabled' : null}>Analyze</button>
-                <button type="button" onClick={getExampleData}>Test</button>
+                <button type="button" onClick={() => getExampleData('example.csv', exampleSummary1)}>Test1</button>
+                <button type="button" onClick={() => getExampleData('example_test_2.csv', exampleSummary2)}>Test2</button>
             </form>
             {error ? <p className="error">{error}</p> : null}
         </StyledForm>
