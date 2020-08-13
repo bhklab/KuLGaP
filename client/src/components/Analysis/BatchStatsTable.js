@@ -5,7 +5,7 @@ import colors from '../../styles/colors';
 
 const columns = [
     {
-        Header: 'KuLGap Stat',
+        Header: 'KL value',
         accessor: 'kulgap',
         minWidth: 100,
         style: {
@@ -14,7 +14,7 @@ const columns = [
         },
     },
     {
-        Header: 'p-value',
+        Header: 'KuLGaP',
         accessor: 'p_value',
         minWidth: 120,
         style: {
@@ -32,19 +32,19 @@ const columns = [
         accessor: 'angle',
         minWidth: 100,
     },
-    {
-        Header: 'ABC',
-        accessor: 'abc',
-        minWidth: 100,
-    },
+    // {
+    //     Header: 'ABC',
+    //     accessor: 'abc',
+    //     minWidth: 100,
+    // },
 ];
 
 const parseData = (data) => [{
     kulgap: FixedPoint(data.kl),
-    p_value: data.kl_p_value.toExponential(1),
+    p_value: data.kl_p_value < 0.05 ? 'Yes' : 'No',
     tgi: FixedPoint(data.tgi),
     angle: FixedPoint(data.average_angle),
-    abc: '',
+    // abc: '',
 }];
 
 const BatchStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="batch" />;
