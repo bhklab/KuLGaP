@@ -13,8 +13,9 @@ const TableWrapper = styled.div`
         margin-bottom: 2px !important;
     }
 
-    .ReactTable * {
+    .ReactTable *, .ReactTable {
         box-sizing: border-box;
+        border: 0px solid !important;
     }
 
     .ReactTable .rt-table {
@@ -24,25 +25,31 @@ const TableWrapper = styled.div`
         overflow: auto
     }
 
-    .rt-thead.-header {
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-
     .ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
         background: #EAEFF9
+    }
+
+    .ReactTable .rt-th, .ReactTable .rt-td {
+        border-top: 1.5px solid ${colors.pale_blue} !important;
+        border-right: 1.5px solid ${colors.pale_blue} !important;
+        &:first-child {
+            border-left: 1.5px solid ${colors.pale_blue} !important;
+        }
     }
 
     .ReactTable .rt-thead {
         color:  ${colors.main};
         font-size: calc(0.20vw + 1.0em);
         font-weight: 600;
-        box-shadow:none !important;
+        box-shadow: none !important;
     }
 
     .ReactTable .rt-tbody {
         color:  ${colors.main};
         font-size: calc(0.10vw + 1.0em);
-        box-shadow:none !important;
+        box-shadow: none !important;
+        border-bottom: 1.5px solid ${colors.pale_blue} !important;
+        text-align: center;
     }
 
     .-previous, .-next, .-btn {
@@ -51,13 +58,13 @@ const TableWrapper = styled.div`
     }
 
     .-pagination, .pagination-bottom {
-        box-shadow:none !important;
-        border-top:1px solid rgba(0,0,0,0.1) !important;
+        box-shadow: none !important;
+        border: 1px solid ${colors.pale_blue} !important;
     }
 
     .ReactTable .-pagination .-pageJump input, input{
         color: ${colors.main};
-        box-shadow:none !important;
+        box-shadow: none !important;
         background: #EAEFF9 !important;
     }
 

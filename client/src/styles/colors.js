@@ -5,4 +5,5 @@ export default {
     darkblue_text: '#052f63',
     red_main: '#A93852',
     tussock: '#d5840b',
+    pale_blue: '#edf2f5',
 };
