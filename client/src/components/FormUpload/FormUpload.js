@@ -13,11 +13,11 @@ import exampleSummary from '../../data/api-test.json';
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
     border-radius: 25px;
-    width: 60%;
+    width: 65%;
     min-width: 300px;
     height: 100%;
     margin: 50px 0px 30px 0px;
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,13 +41,14 @@ const StyledForm = styled.div`
         color: white;
         border: none;
         cursor: pointer;
-        padding: 8px 10px;
-        border-radius:10px;
+        padding: 12px;
+        border-radius: 10px;
         font-weight: 600;
         outline: none;
         transition: all ease-out 0.25s;
         margin: 0 5px;
         min-height: 40px;
+        font-size: calc(0.25vw + 1.0em);
         &:hover {
             color: ${colors.main};
             background: white;
@@ -66,7 +67,7 @@ const StyledReader = styled.div`
     color: white;
     border-radius: 20px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: calc(0.25vw + 1.0em);
     &:hover {
         background: white;
         color: ${colors.main};
@@ -74,15 +75,16 @@ const StyledReader = styled.div`
     div {
         border-width: 0px !important;
     }
+    padding: 10px;
 `;
 
 const StyleLink = styled.div`
     a:link {
         text-decoration: none;
-        color: ${colors.main};
-        font-size: 12px;
+        color: ${colors.tussock};
+        font-size: 1em;
         &:hover {
-            color: ${colors.tussock}
+            color: ${colors.main}
         }
     }
 `;
