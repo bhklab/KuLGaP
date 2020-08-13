@@ -3,6 +3,7 @@ import ReactTable from 'react-table-v6';
 import { PropTypes } from 'prop-types';
 import 'react-table-v6/react-table.css';
 import TableWrapper from '../../styles/TableStyle';
+import colors from '../../styles/colors';
 
 const checkType = (type) => {
     if (type === 'model') {
@@ -31,6 +32,16 @@ const AnalysisTable = (props) => {
                 filterable={type === 'model'}
                 showPagination={type === 'model'}
                 TheadComponent={TheadComponent}
+                getTrProps={(state, rowInfo) => {
+                    if (rowInfo) {
+                        return {
+                            style: {
+                                fontWeight: rowInfo.original.name === 'KuLGaP' ? '600' : 'normal',
+                                color: rowInfo.original.name === 'KuLGaP' ? `${colors.tussock}` : `${colors.main}`,
+                            },
+                        };
+                    }
+                }}
             />
         </TableWrapper>
     );

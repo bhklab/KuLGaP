@@ -1,47 +1,46 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import AnalysisTable from './AnalysisTable';
 import FixedPoint from '../utils/FixedPoint';
-import colors from '../../styles/colors';
 
 const columns = [
     {
-        Header: 'KL value',
-        accessor: 'kulgap',
-        style: {
-            color: `${colors.tussock}`,
-            fontWeight: '600',
-        },
+        Header: 'Name',
+        accessor: 'name',
     },
     {
-        Header: 'KuLGaP',
-        accessor: 'p_value',
-        style: {
-            color: `${colors.tussock}`,
-            fontWeight: '600',
-        },
+        Header: 'Estimate',
+        accessor: 'estimate',
     },
     {
-        Header: 'TGI',
-        accessor: 'tgi',
+        Header: 'p-value',
+        accessor: 'p-value',
     },
     {
-        Header: 'Angle',
-        accessor: 'angle',
+        Header: 'Responder',
+        accessor: 'responder',
     },
-    // {
-    //     Header: 'ABC',
-    //     accessor: 'abc',
-    //     minWidth: 100,
-    // },
 ];
 
-const parseData = (data) => [{
-    kulgap: FixedPoint(data.kl),
-    p_value: data.kl_p_value < 0.05 ? 'Yes' : 'No',
-    tgi: FixedPoint(data.tgi),
-    angle: FixedPoint(data.average_angle),
-    // abc: '',
-}];
+const values = [
+    {
+        key: 'kl',
+        value: 'KuLGaP',
+    }, {
+        key: 'tgi',
+        value: 'TGI',
+    }, {
+        key: 'average_angle',
+        value: 'Angle',
+    },
+];
+
+const parseData = (data) => values.map((object) => ({
+    name: object.value,
+    estimate: FixedPoint(data[object.key]),
+    'p-value': object.key === 'kl' ? data.kl_p_value.toExponential(1) : '',
+    responder: object.key === 'kl' ? (data.kl_p_value < 0.05 ? 'Yes' : 'No') : '',
+}));
 
 const BatchStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="batch" />;
 
