@@ -7,7 +7,6 @@ const columns = [
     {
         Header: 'KL value',
         accessor: 'kulgap',
-        minWidth: 100,
         style: {
             color: `${colors.tussock}`,
             fontWeight: '600',
@@ -16,7 +15,6 @@ const columns = [
     {
         Header: 'KuLGaP',
         accessor: 'p_value',
-        minWidth: 120,
         style: {
             color: `${colors.tussock}`,
             fontWeight: '600',
@@ -25,12 +23,10 @@ const columns = [
     {
         Header: 'TGI',
         accessor: 'tgi',
-        minWidth: 230,
     },
     {
         Header: 'Angle',
         accessor: 'angle',
-        minWidth: 100,
     },
     // {
     //     Header: 'ABC',
