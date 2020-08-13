@@ -41,7 +41,7 @@ const StyledForm = styled.div`
         color: white;
         border: none;
         cursor: pointer;
-        padding: 12px;
+        padding: 10px;
         border-radius: 10px;
         font-weight: 600;
         outline: none;
@@ -75,14 +75,14 @@ const StyledReader = styled.div`
     div {
         border-width: 0px !important;
     }
-    padding: 10px;
+    padding: 6px;
 `;
 
 const StyleLink = styled.div`
     a:link {
         text-decoration: none;
         color: ${colors.tussock};
-        font-size: 1em;
+        font-size: .9em;
         &:hover {
             color: ${colors.main}
         }

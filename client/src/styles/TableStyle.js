@@ -30,10 +30,10 @@ const TableWrapper = styled.div`
     }
 
     .ReactTable .rt-th, .ReactTable .rt-td {
-        border-top: 1.5px solid ${colors.pale_blue} !important;
-        border-right: 1.5px solid ${colors.pale_blue} !important;
+        border-top: 1.0px solid ${colors.pale_blue} !important;
+        border-right: 1.0px solid ${colors.pale_blue} !important;
         &:first-child {
-            border-left: 1.5px solid ${colors.pale_blue} !important;
+            border-left: 1.0px solid ${colors.pale_blue} !important;
         }
     }
 
@@ -48,7 +48,7 @@ const TableWrapper = styled.div`
         color:  ${colors.main};
         font-size: calc(0.10vw + 1.0em);
         box-shadow: none !important;
-        border-bottom: 1.5px solid ${colors.pale_blue} !important;
+        border-bottom: 1.0px solid ${colors.pale_blue} !important;
         text-align: center;
     }
 
