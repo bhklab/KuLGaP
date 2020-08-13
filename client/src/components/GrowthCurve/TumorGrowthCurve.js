@@ -66,6 +66,7 @@ const createToolTip = (d, type, tooltip) => {
 const calculateMinMax = (data) => {
     // calculating max time, min/max volumes of all data
     const maxTimeArray = [];
+    const minTimeArray = [];
     const minVolArray = [];
     const maxVolArray = [];
     const maxVolNormArray = [];
@@ -74,6 +75,7 @@ const calculateMinMax = (data) => {
     // looping through data to get max and min array.
     for (let i = 0; i < data.length; i++) {
         maxTimeArray.push(d3.max(data[i].pdx_points[0].times));
+        minTimeArray.push(d3.min(data[i].pdx_points[0].times));
         minVolArray.push(d3.min(data[i].pdx_points[0].volumes));
         maxVolArray.push(d3.max(data[i].pdx_points[0].volumes));
         maxVolNormArray.push(d3.max(data[i].pdx_points[0].volume_normals));
@@ -81,6 +83,7 @@ const calculateMinMax = (data) => {
     }
 
     // max and min value.
+    const minTime = Math.max.apply(null, minTimeArray);
     const maxTime = Math.max.apply(null, maxTimeArray);
     const minVolume = Math.min.apply(null, minVolArray);
     const maxVolume = Math.max.apply(null, maxVolArray);
@@ -88,7 +91,7 @@ const calculateMinMax = (data) => {
     const minVolNorm = Math.min.apply(null, minVolNormArray);
 
     return {
-        maxTime, minVolume, maxVolume, maxVolNorm, minVolNorm,
+        minTime, maxTime, minVolume, maxVolume, maxVolNorm, minVolNorm,
     };
 };
 
@@ -311,9 +314,8 @@ const tumorCurve = (data, plotId, minmax) => {
 
     // set domain and range scaling
     const xrange = d3.scaleLinear()
-        .domain([0, minmax.maxTime])
-        .range([0, width])
-        .nice();
+        .domain([minmax.minTime, minmax.maxTime])
+        .range([0, width]);
 
     const yrange = d3.scaleLinear()
         .domain([0, minmax.maxVolume])
