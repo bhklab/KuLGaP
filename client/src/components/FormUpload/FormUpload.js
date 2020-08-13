@@ -178,7 +178,6 @@ const UploadForm = () => {
                 })
                 .catch((err) => {
                     // displays error message if request is unsuccessful
-                    console.log(err.response);
                     if (err.response.status >= 400) {
                         const { message } = err.response.data;
                         setAnalysisState({
