@@ -14,11 +14,11 @@ import exampleSummary2 from '../../data/api-test-2.json';
 const StyledForm = styled.div`
     background-color: ${colors.gray_bg};
     border-radius: 25px;
-    width: 65%;
+    width: 75%;
     min-width: 300px;
     height: 100%;
-    margin: 50px 0px 30px 0px;
-    padding: 30px;
+    margin: 50px 0px 100px 0px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,7 +68,7 @@ const StyledReader = styled.div`
     color: white;
     border-radius: 20px;
     font-weight: 600;
-    font-size: calc(0.25vw + 1.0em);
+    font-size: 1.35em;
     &:hover {
         background: white;
         color: ${colors.main};
@@ -76,7 +76,8 @@ const StyledReader = styled.div`
     div {
         border-width: 0px !important;
     }
-    padding: 6px;
+    padding: 1px;
+    margin-right: 20px;
 `;
 
 const StyleLink = styled.div`
@@ -88,6 +89,7 @@ const StyleLink = styled.div`
             color: ${colors.main}
         }
     }
+    margin-right: 10px;
 `;
 
 // function to calculate the normal volume.
