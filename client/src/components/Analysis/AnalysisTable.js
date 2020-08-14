@@ -41,6 +41,7 @@ const AnalysisTable = (props) => {
                             },
                         };
                     }
+                    return {};
                 }}
             />
         </TableWrapper>
