@@ -17,6 +17,7 @@ const App = () => {
         <div className="App">
             <Normalize />
             <GlobalStyles />
+            <button type="button" className="documentation-button"> Documentation </button>
             <Home />
         </div>
     );

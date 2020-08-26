@@ -24,57 +24,56 @@ const GlobalStyles = createGlobalStyle`
         margin-top: 15px !important;
         font-size: calc(0.5vw + 1.5em);
     }
-    main {
-        width: 60%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 50%;
-        // background:rgb(0,0,0,0.5);
-    }
-    .logo {
-        width: 80% !important;
-        padding-top: 30px;
-    }
-    .header-container {
-        width:100%;
-        display:flex;
-        justify-content: center;
-        align-items:center;
-    }
-    .App {
-        width: 100%;
-    }
-    .top-nav {
-        h1 {
-            text-align: left;
-        }
-    }
-    .loading-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 300px;
+
+    .documentation-button {
+        align-self: flex-end !important;
+        margin: 30px;
+        background: ${colors.main};
+        color: white;
+        border: none;
+        cursor: pointer;
         padding: 10px;
-        margin: auto;
-        width: 150px;
-        text-align: center;
-        h3 {
+        border-radius: 6px;
+        font-weight: 600;
+        outline: none;
+        transition: all ease-out 0.25s;
+        min-height: 40px;
+        font-size: calc(0.20vw + 1.0em);
+        &:hover {
+            color: ${colors.main};
+            background: white;
+        };
+        &.disabled {
+            cursor: default;
+            background: #778899;
             color: white;
         }
     }
 
-    // plotly styling
-    .js-plotly-plot {
-        width: 100%;
+    main {
+        width: 60%;
+        margin-top: 8vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 50%;
+        // background:rgb(0,0,0,0.5);
+    }
+    
+    .logo {
+        width: 80% !important;
+        padding-top: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    #root {
+    .App {
         width: 100vw;
         min-height: 100vh;
         display: flex;
+        flex-direction: column;
+        align-items: center;
         background: linear-gradient(
             to right,
             rgba(0, 0, 0, 0), 
@@ -83,13 +82,9 @@ const GlobalStyles = createGlobalStyle`
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        display: flex;
         z-index: 0
         .main-wrapper {
-        overflow-x:hidden;
+            overflow-x: hidden;
         }
     }
 }

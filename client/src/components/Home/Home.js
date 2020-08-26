@@ -13,24 +13,26 @@ function Home() {
         loading, summary,
     } = analysisState;
     return (
-        <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
-            <main className="home-form">
-                <div className="header-container">
-                    <a href="https://www.kulgap.ca" target="_blank" rel="noreferrer">
-                        <img alt="logo" className="logo" src={logo} />
-                    </a>
-                </div>
-                <h3> Robust Quantification of Therapy Response in Xenografts </h3>
-                <FormUpload />
-                {
-                    !loading ? (
-                        <>
-                            {summary ? <Analysis /> : <div />}
-                        </>
-                    ) : <LoadingComponent />
-                }
-            </main>
-        </AnalysisContext.Provider>
+        <>
+            <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
+                <main className="home-form">
+                    <div className="header-container">
+                        <a href="https://www.kulgap.ca" target="_blank" rel="noreferrer">
+                            <img alt="logo" className="logo" src={logo} />
+                        </a>
+                    </div>
+                    <h3> Robust Quantification of Therapy Response in Xenografts </h3>
+                    <FormUpload />
+                    {
+                        !loading ? (
+                            <>
+                                {summary ? <Analysis /> : <div />}
+                            </>
+                        ) : <LoadingComponent />
+                    }
+                </main>
+            </AnalysisContext.Provider>
+        </>
     );
 }
 
