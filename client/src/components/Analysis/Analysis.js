@@ -28,8 +28,9 @@ const StyledAnalysis = styled.div`
     flex-direction: column;
     justify-content: center;
     padding: 30px;
+    box-sizing: border-box;
     margin-bottom: 30px;
-
+    
     svg {
       display: flex;
       margin: auto;
