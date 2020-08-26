@@ -27,26 +27,28 @@ const GlobalStyles = createGlobalStyle`
 
     .documentation-button {
         align-self: flex-end !important;
-        margin: 30px;
-        background: ${colors.main};
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 6px;
-        font-weight: 600;
-        outline: none;
-        transition: all ease-out 0.25s;
-        min-height: 40px;
-        font-size: calc(0.20vw + 1.0em);
-        &:hover {
-            color: ${colors.main};
-            background: white;
-        };
-        &.disabled {
-            cursor: default;
-            background: #778899;
+        button {
+            margin: 30px;
+            background: ${colors.main};
             color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            outline: none;
+            transition: all ease-out 0.25s;
+            min-height: 40px;
+            font-size: calc(0.20vw + 1.0em);
+            &:hover {
+                color: ${colors.main};
+                background: white;
+            };
+            &.disabled {
+                cursor: default;
+                background: #778899;
+                color: white;
+            }
         }
     }
 

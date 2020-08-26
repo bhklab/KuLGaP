@@ -15,9 +15,9 @@ function Home() {
     } = analysisState;
     return (
         <div className="App">
-
-            <button type="button" className="documentation-button"> Documentation </button>
-
+            <Link to="/doc" className="documentation-button">
+                <button type="button"> Documentation </button>
+            </Link>
             <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
                 <main className="home-form">
                     <div className="header-container">
