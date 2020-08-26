@@ -52,7 +52,7 @@ const GlobalStyles = createGlobalStyle`
 
     main {
         width: 60%;
-        margin-top: 8vh;
+        margin-top: 6vh;
         display: flex;
         flex-direction: column;
         align-items: center;

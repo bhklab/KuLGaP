@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Normalize } from 'styled-normalize';
 import ReactGA from 'react-ga';
 import GlobalStyles from './styles/GlobalStyles';
 
 import Home from './components/Home/Home';
+import Documentation from './components/Documentation/Documentation';
 
 const App = () => {
     // Google analytics setup.
@@ -14,11 +16,13 @@ const App = () => {
     }, []);
 
     return (
-        <div className="App">
-            <Normalize />
-            <GlobalStyles />
-            <button type="button" className="documentation-button"> Documentation </button>
-            <Home />
+        <div>
+            <Router>
+                <Normalize />
+                <GlobalStyles />
+                <Route path="/" exact component={Home} />
+                <Route path="/doc" exact component={Documentation} />
+            </Router>
         </div>
     );
 };
