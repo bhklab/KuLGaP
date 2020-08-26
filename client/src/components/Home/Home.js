@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import FormUpload from '../FormUpload/FormUpload';
 import Analysis from '../Analysis/Analysis';
 import AnalysisContext from '../Context/AnalysisContext';
@@ -13,7 +14,10 @@ function Home() {
         loading, summary,
     } = analysisState;
     return (
-        <>
+        <div className="App">
+
+            <button type="button" className="documentation-button"> Documentation </button>
+
             <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
                 <main className="home-form">
                     <div className="header-container">
@@ -32,7 +36,7 @@ function Home() {
                     }
                 </main>
             </AnalysisContext.Provider>
-        </>
+        </div>
     );
 }
 
