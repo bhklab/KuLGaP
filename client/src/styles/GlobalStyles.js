@@ -69,12 +69,17 @@ const GlobalStyles = createGlobalStyle`
         // background:rgb(0,0,0,0.5);
     }
     
-    .logo {
+    .logo, .images {
         width: 80% !important;
         padding-top: 20px;
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .images {
+        width: 55% !important;
+        padding-bottom: 20px;
     }
 
     .App {

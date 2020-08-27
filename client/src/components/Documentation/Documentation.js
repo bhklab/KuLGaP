@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import bgImg from '../../images/bg.png';
 import colors from '../../styles/colors';
+import input from '../../images/input.png';
+import stats from '../../images/stats.png';
+import model from '../../images/model.png';
+import graph from '../../images/graph.png';
 
 const StyledDocumentation = styled.div`
   background: linear-gradient(
@@ -20,20 +24,21 @@ const StyledDocumentation = styled.div`
     font-size: calc(1.50vw + 1.5em);
     margin: 0px !important;
     padding-top: 10vh !important;
-    padding-bottom: 5vh;
+    padding-bottom: 1vh;
     font-weight: 600;
   }
 
   h3 {
-    font-size: calc(.9vw + 1.5em);
+    font-size: calc(.4vw + 1.5em);
     color: ${colors.tussock};
     margin-left: 6vw;
+    margin-top: 40px !important;
     text-align: left;
     font-weight: 600;
   }
 
   h4 {
-    font-size: calc(.40vw + 1.0em) !important;
+    font-size: calc(.4vw + 1.0em) !important;
     color: ${colors.main};
     font-weight: 400;
     margin-left: 10vw;
@@ -66,6 +71,27 @@ const Documentation = () => (
                 more specific measure that is able to capture the most promising therapies while
                 reducing the risk of false positive calls.
             </h4>
+            <h3> Input Data Format </h3>
+            <h4>
+                The user can upload a CSV file as an input, where the first column
+                should be the
+                {' '}
+                <i> Time </i>
+                {' '}
+                and subsequent columns are
+                {' '}
+                <i> Control </i>
+                {' '}
+                and
+                {' '}
+                <i> Treatment. </i>
+                The Example data file is provided which can be downloaded to get an idea of the required input.
+            </h4>
+            <img src={input} className="images" alt="Input" />
+            <h3> Output Data </h3>
+            <img src={stats} className="images" alt="Stats" />
+            <img src={model} className="images" alt="Model Response" />
+            <img src={graph} className="images" alt="Growth Curve" />
         </div>
     </StyledDocumentation>
 );
