@@ -25,10 +25,12 @@ const GlobalStyles = createGlobalStyle`
         font-size: calc(0.5vw + 1.5em);
     }
 
-    .documentation-button {
+    .documentation-button, .home-button {
         align-self: flex-end !important;
         button {
-            margin: 30px;
+            margin-top: 30px;
+            margin-left: 30px;
+            margin-right: 30px;
             background: ${colors.main};
             color: white;
             border: none;
@@ -39,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
             outline: none;
             transition: all ease-out 0.25s;
             min-height: 40px;
-            font-size: calc(0.20vw + 1.0em);
+            font-size: calc(0.15vw + 1.0em);
             &:hover {
                 color: ${colors.main};
                 background: white;
@@ -51,6 +53,11 @@ const GlobalStyles = createGlobalStyle`
             }
         }
     }
+
+    .home-button {
+        float: right;
+    }
+
 
     main {
         width: 60%;

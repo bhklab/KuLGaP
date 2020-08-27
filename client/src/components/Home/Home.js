@@ -19,8 +19,8 @@ function Home() {
                 <button type="button"> Documentation </button>
             </Link>
             <AnalysisContext.Provider value={{ analysisState, setAnalysisState }}>
-                <main className="home-form">
-                    <div className="header-container">
+                <main>
+                    <div>
                         <a href="https://www.kulgap.ca" target="_blank" rel="noreferrer">
                             <img alt="logo" className="logo" src={logo} />
                         </a>
