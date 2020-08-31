@@ -31,7 +31,6 @@ const StyledForm = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-family: 'Open Sans', sans-serif;
         font-size: calc(0.5vw + 0.5em);
         
     .input {
@@ -247,7 +246,7 @@ const UploadForm = () => {
                         onRemoveFile={handleOnRemoveFile}
                         style={{ borderWidth: '0px !important' }}
                     >
-                        <span>Upload CSV File</span>
+                        <span> Upload CSV File </span>
                     </CSVReader>
                 </StyledReader>
                 <StyleLink>

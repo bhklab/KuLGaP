@@ -3,11 +3,13 @@ import colors from './colors';
 import bgImg from '../images/bg.png';
 
 const GlobalStyles = createGlobalStyle`
-
+    * {
+        font-family: 'Sen', sans-serif;
+    }
+    
     h1, h2, h3 {
         margin: 0;
         color: ${colors.main};
-        font-family: 'Sen', sans-serif;
         font-weight: 400;
         text-align: center;
     }
