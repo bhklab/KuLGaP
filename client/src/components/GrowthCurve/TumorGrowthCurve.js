@@ -345,6 +345,7 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('text-anchor', 'middle')
         .attr('fill', 'black')
         .attr('transform', `translate(${width / 2},${height + 40})`)
+        .attr('font-size', '14px')
         .text('Time (days)');
 
     // Add the Y Axis
@@ -360,6 +361,7 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('text-anchor', 'middle')
         .attr('fill', 'black')
         .attr('transform', `translate(${-60},${height / 2})rotate(-90)`)
+        .attr('font-size', '14px')
         .text('Volume (mm³)');
 
     // remove strokes for all ticks
