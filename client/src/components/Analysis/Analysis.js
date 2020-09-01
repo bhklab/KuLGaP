@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import Collapsible from 'react-collapsible';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
 import ModelStatsTable from './ModelStatsTable';
@@ -15,9 +16,10 @@ const StyledAnalysis = styled.div`
   .analysis-header {
     color: ${colors.main};
     align-self: flex-start;
-    margin: 0 0 10px;
-    font-size: 24px;
+    margin: 0 0 20px;
+    font-size: calc(0.5vw + 1.0em);
     font-weight: 700;
+    text-align: center !important;
   }
 
   .container {
@@ -36,6 +38,17 @@ const StyledAnalysis = styled.div`
       margin: auto;
     }
   }
+
+  .Collapsible__trigger {
+      color: ${colors.main};
+      font-size: calc(0.25vw + 1.0em);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 30px;
+      :hover {
+        color: ${colors.tussock};
+      }
+  }
 `;
 
 function Analysis() {
@@ -45,18 +58,17 @@ function Analysis() {
     return (
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
-            {/* <div className="container">
-                <KulgapStatsTable data={summary} />
-            </div> */}
-            <div className="container">
-                <BatchStatsTable data={summary} />
-            </div>
-            <div className="container">
-                <ModelStatsTable data={summary} />
-            </div>
             <div className="container">
                 <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
+            <Collapsible trigger="Click to check the statistics" triggerWhenOpen="Click to uncheck the statistics">
+                <div className="container">
+                    <BatchStatsTable data={summary} />
+                </div>
+                <div className="container">
+                    <ModelStatsTable data={summary} />
+                </div>
+            </Collapsible>
         </StyledAnalysis>
     );
 }
