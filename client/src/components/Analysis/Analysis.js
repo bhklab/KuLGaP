@@ -41,12 +41,17 @@ const StyledAnalysis = styled.div`
 
   .Collapsible__trigger {
       color: ${colors.main};
-      font-size: calc(0.25vw + 1.0em);
+      font-size: calc(0.35vw + 1.0em);
       font-weight: 700;
       display: block;
       margin-bottom: 30px;
+      border-radius: 10px;
+      padding: 20px;
+      background: white;
       :hover {
         color: ${colors.tussock};
+        background: ${colors.pale_blue};
+        cursor: pointer;
       }
   }
 `;
@@ -61,7 +66,10 @@ function Analysis() {
             <div className="container">
                 <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
-            <Collapsible trigger="Click to check the statistics" triggerWhenOpen="Click to uncheck the statistics">
+            <Collapsible
+                trigger="Click to uncollapse the statistics"
+                triggerWhenOpen="Click to collapse the statistics"
+            >
                 <div className="container">
                     <BatchStatsTable data={summary} />
                 </div>
