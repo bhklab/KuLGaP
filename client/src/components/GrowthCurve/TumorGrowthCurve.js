@@ -271,7 +271,7 @@ const tumorCurve = (data, plotId, minmax) => {
         top: 10,
         right: 100,
         bottom: 250,
-        left: 100,
+        left: 90,
     };
 
     // make the svg element
@@ -307,7 +307,7 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('id', (d, i) => `legend-text-${expTypes[i]}`)
         .attr('class', 'legend')
         .attr('fill', 'black')
-        .style('font-size', '16px')
+        .style('font-size', '14px')
         .attr('x', width + 40)
         .attr('y', (d, i) => height / 2 - 45 + (i * 50))
         .text((d, i) => expTypes[i]);
