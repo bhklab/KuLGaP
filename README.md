@@ -10,9 +10,8 @@ git clone git@github.com:bhklab/KuLGaP.git
 cd KuLGap
 ```
 
-- In the project directory, install all server dependencies `npm i`
-- Create .env using .env.example as a reference to access the database
-- To start the server first install dependencies using `pip install -r requirements.txt` and then run this command `flask run` to start the server
+- In the project directory, install all the server dependencies using `pip install -r requirements.txt
+- To start the server run this command `flask run`
 - Start the client (development mode) by running `npm start`
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
