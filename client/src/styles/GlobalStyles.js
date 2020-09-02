@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
     h3 {
         margin-top: 15px !important;
         font-size: calc(0.5vw + 1.5em);
+        font-weight: 700 !important;
     }
 
     .documentation-button, .home-button {

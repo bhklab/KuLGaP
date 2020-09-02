@@ -29,7 +29,7 @@ const StyledDocumentation = styled.div`
   }
 
   h3 {
-    font-size: calc(.4vw + 1.5em);
+    font-size: calc(.4vw + 1.25em);
     color: ${colors.tussock};
     margin-left: 6vw;
     margin-top: 40px !important;

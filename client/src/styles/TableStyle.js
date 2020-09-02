@@ -9,7 +9,7 @@ const TableWrapper = styled.div`
         text-align: left !important;
         font-size: calc(0.35vw + 1.0em);
         margin-top: 0px !important;
-        margin-bottom: 2px !important;
+        margin-bottom: 15px !important;
     }
 
     .ReactTable *, .ReactTable {

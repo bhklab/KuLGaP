@@ -10,10 +10,10 @@ import colors from '../../styles/colors';
 const StyledCollapsible = styled.div`
     .Collapsible__trigger {
         color: ${colors.tussock};
-        font-size: calc(0.5vw + 1.0em);
-        font-weight: 500;
+        font-size: calc(0.35vw + 1.0em) !important;
+        font-weight: 700;
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 15px;
         border-radius: 10px;
         background: white;
         :hover {
