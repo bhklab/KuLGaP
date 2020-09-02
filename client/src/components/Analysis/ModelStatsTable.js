@@ -2,6 +2,38 @@ import React from 'react';
 import AnalysisTable from './AnalysisTable';
 import FixedPoint from '../utils/FixedPoint';
 
+const columns = [
+    {
+        Header: 'Drug',
+        accessor: 'drug',
+        minWidth: 100,
+    },
+    {
+        Header: 'mRECIST',
+        accessor: 'mRECIST',
+        minWidth: 120,
+    },
+    {
+        Header: 'Best Average Response',
+        accessor: 'bar',
+        minWidth: 230,
+    },
+    {
+        Header: 'Slope',
+        accessor: 'slope',
+        minWidth: 100,
+    },
+    {
+        Header: 'AUC',
+        accessor: 'AUC',
+        minWidth: 100,
+    },
+];
+
+/**
+ *
+ * @param {Array} data
+ */
 const parseData = (data) => {
     const newData = [];
     const cleanData = (value) => JSON.parse(JSON.stringify(value)).split('_').map((val) => val.replace(/[0-9].*:/, ''));
@@ -54,34 +86,6 @@ const parseData = (data) => {
     });
     return newData;
 };
-
-const columns = [
-    {
-        Header: 'Drug',
-        accessor: 'drug',
-        minWidth: 100,
-    },
-    {
-        Header: 'mRECIST',
-        accessor: 'mRECIST',
-        minWidth: 120,
-    },
-    {
-        Header: 'Best Average Response',
-        accessor: 'bar',
-        minWidth: 230,
-    },
-    {
-        Header: 'Slope',
-        accessor: 'slope',
-        minWidth: 100,
-    },
-    {
-        Header: 'AUC',
-        accessor: 'AUC',
-        minWidth: 100,
-    },
-];
 
 const ModelStatsTable = ({ data }) => {
     const tableData = parseData(data);

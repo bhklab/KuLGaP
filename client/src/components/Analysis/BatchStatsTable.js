@@ -35,9 +35,17 @@ const values = [
     }, {
         key: 'mRECIST',
         value: 'mRECIST',
+    }, {
+        key: 'auc',
+        value: 'AUC',
     },
 ];
 
+/**
+ *
+ * @param {Array} data
+ * @returns {String}
+ */
 const calcResponse = (data) => {
     const count = {
         SD: 0,
@@ -62,9 +70,23 @@ const calcResponse = (data) => {
     return max_array.join('/');
 };
 
+/**
+ *
+ * @param {Object} object
+ * @param {Array} data
+ */
+const calculateEstimate = (object, data) => {
+    if (object.value === 'mRECIST') {
+        return calcResponse(data);
+    } if (object.value === 'AUC') {
+        return FixedPoint(data.auc_gp - data.auc_gp_control);
+    }
+    return FixedPoint(data[object.key]);
+};
+
 const parseData = (data) => values.map((object) => ({
     name: object.value,
-    estimate: object.value === 'mRECIST' ? calcResponse(data) : FixedPoint(data[object.key]),
+    estimate: calculateEstimate(object, data),
     'p-value': object.key === 'kl' ? data.kl_p_value.toExponential(1) : '',
     responder: object.key === 'kl' ? (data.kl_p_value < 0.05 ? 'Yes' : 'No') : '',
 }));

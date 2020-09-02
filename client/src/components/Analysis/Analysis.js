@@ -71,6 +71,9 @@ const Analysis = () => {
         <StyledAnalysis>
             <h2 className="analysis-header">Analysis Results</h2>
             <div className="container">
+                <BatchStatsTable data={summary} />
+            </div>
+            <div className="container">
                 <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
             </div>
             <Collapsible
@@ -79,9 +82,6 @@ const Analysis = () => {
                 onOpen={() => scrollToRef(myRef)}
             >
                 <div className="container" ref={myRef}>
-                    <BatchStatsTable data={summary} />
-                </div>
-                <div className="container">
                     <ModelStatsTable data={summary} />
                 </div>
             </Collapsible>
