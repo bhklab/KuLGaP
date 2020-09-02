@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
     h1, h2, h3 {
         margin: 0;
         color: ${colors.main};
-        font-weight: 400;
+        font-weight: 500;
         text-align: center;
     }
   
