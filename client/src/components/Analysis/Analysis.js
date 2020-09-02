@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import React, {
+    useContext, useRef,
+} from 'react';
 import styled from 'styled-components';
 import Collapsible from 'react-collapsible';
 import colors from '../../styles/colors';
@@ -56,9 +58,14 @@ const StyledAnalysis = styled.div`
   }
 `;
 
-function Analysis() {
+const scrollToRef = (ref) => {
+    window.scrollTo(0, ref.current.offsetTop);
+};
+
+const Analysis = () => {
     const { analysisState } = useContext(AnalysisContext);
     const { data, summary } = analysisState;
+    const myRef = useRef(null);
 
     return (
         <StyledAnalysis>
@@ -69,8 +76,9 @@ function Analysis() {
             <Collapsible
                 trigger="Click to uncollapse the statistics"
                 triggerWhenOpen="Click to collapse the statistics"
+                onOpen={() => scrollToRef(myRef)}
             >
-                <div className="container">
+                <div className="container" ref={myRef}>
                     <BatchStatsTable data={summary} />
                 </div>
                 <div className="container">
@@ -79,6 +87,6 @@ function Analysis() {
             </Collapsible>
         </StyledAnalysis>
     );
-}
+};
 
 export default Analysis;
