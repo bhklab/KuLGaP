@@ -75,6 +75,17 @@ const StyledReader = styled.div`
     div {
         border-width: 0px !important;
     }
+    div div {
+        span {
+            background-color: transparent !important;
+            color: ${colors.tussock};
+        }
+    }
+    div:nth-child(3) {
+        span {
+            background-color: ${colors.main} !important;
+        }
+    }
     padding: 1px;
     margin-right: 20px;
 `;
