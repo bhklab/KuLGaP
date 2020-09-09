@@ -23,8 +23,9 @@ const StyledForm = styled.div`
     flex-direction: column;
     align-items: center;
     .error {
-        color: ${colors.red_error};
+        color: ${colors.red_main};
         font-weight: 700;
+        font-size: calc(0.45vw + 1.0em);
     }
     .main-submit {
         width: 100%;
