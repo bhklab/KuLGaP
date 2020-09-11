@@ -91,6 +91,8 @@ const parseData = (data) => values.map((object) => ({
     responder: object.key === 'kl' ? (data.kl_p_value < 0.05 ? 'Yes' : 'No') : '',
 }));
 
-const BatchStatsTable = ({ data }) => <AnalysisTable data={parseData(data)} columns={columns} type="batch" />;
+const BatchStatsTable = ({ data }) => (
+    <AnalysisTable data={parseData(data)} columns={columns} type="batch" />
+);
 
 export default BatchStatsTable;

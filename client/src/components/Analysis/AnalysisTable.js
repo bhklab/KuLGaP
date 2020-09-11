@@ -4,8 +4,10 @@ import { PropTypes } from 'prop-types';
 import 'react-table-v6/react-table.css';
 import Collapsible from 'react-collapsible';
 import styled from 'styled-components';
+import { CSVLink } from 'react-csv';
 import TableWrapper from '../../styles/TableStyle';
 import colors from '../../styles/colors';
+import downloadIcon from '../../images/download1.svg';
 
 const StyledCollapsible = styled.div`
     .Collapsible__trigger {
@@ -21,6 +23,31 @@ const StyledCollapsible = styled.div`
             cursor: pointer;
         }
     }
+`;
+
+const StyledLink = styled.div`
+    display: inline-block;
+    font-weight: 500;
+    float: right;
+    img {
+        display: inline-block;
+        height: 18px;
+        width: 25px;
+        margin-left: 5px;
+    }
+    a:link {
+        background-color: ${colors.main} !important;
+        color: white !important;
+        padding: 8px !important;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 1.0em;
+    }
+    a:hover {
+        color: ${colors.main} !important;
+        background-color: ${colors.gray_bg} !important;
+    }
+    
 `;
 
 const reactTable = (data, columns, type, TheadComponent) => (
@@ -49,18 +76,32 @@ const reactTable = (data, columns, type, TheadComponent) => (
 const renderOutput = (data, columns, type, TheadComponent) => {
     if (type === 'model') {
         return (
-            <StyledCollapsible>
-                <Collapsible
-                    trigger="Statistics (Model Response)"
-                >
-                    {reactTable(data, columns, type, TheadComponent)}
-                </Collapsible>
-            </StyledCollapsible>
+            <>
+                <StyledLink>
+                    <CSVLink data={data} filename="model.csv">
+                        Download Statistics
+                        <img src={downloadIcon} alt="download icon!" />
+                    </CSVLink>
+                </StyledLink>
+                <StyledCollapsible>
+                    <Collapsible
+                        trigger="Statistics (Model Response)"
+                    >
+                        {reactTable(data, columns, type, TheadComponent)}
+                    </Collapsible>
+                </StyledCollapsible>
+            </>
         );
     }
     return (
         <div>
-            <h3> Statistics </h3>
+            <h3 style={{ display: 'inline-block' }}> Statistics </h3>
+            <StyledLink>
+                <CSVLink data={data} filename="batch.csv">
+                    Download Statistics
+                    <img src={downloadIcon} alt="download icon!" />
+                </CSVLink>
+            </StyledLink>
             {reactTable(data, columns, type, TheadComponent)}
         </div>
     );
