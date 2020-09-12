@@ -12,6 +12,7 @@ const StyledButton = styled.div`
       background-color: ${colors.main} !important;
       color: white !important;
       padding: 6px !important;
+      padding-left: 10px !important;
       border-radius: 6px;
       border: 0px;
       font-size: 1.0em;
