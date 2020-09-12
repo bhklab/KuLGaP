@@ -4,9 +4,10 @@
 /* eslint-disable no-extend-native */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-plusplus */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
+import DownloadButton from '../DownloadButton/DownloadButton';
 import colors from '../../styles/colors';
 
 // this will initialize a tooltip.
@@ -265,13 +266,13 @@ const tumorCurve = (data, plotId, minmax) => {
     const expTypes = ['control', 'treatment'];
 
     // positioning variables
-    const width = 620;
+    const width = 640;
     const height = 550;
     const margin = {
-        top: 10,
-        right: 100,
-        bottom: 250,
-        left: 90,
+        top: 30,
+        right: 110,
+        bottom: 50,
+        left: 60,
     };
 
     // make the svg element
@@ -848,8 +849,9 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
 
 // main function to plot the growth curve.
 const TumorGrowthCurve = (props) => {
-    const { patientParam, drugParam, data } = props;
+    const { data } = props;
     const plotId = 'plot';
+    const componentRef = useRef();
 
     // removing the already created plot.
     d3.select('#pdxplot').remove();
@@ -871,14 +873,13 @@ const TumorGrowthCurve = (props) => {
 
     return (
         <div>
-            <svg id="svg-curve" width={900} height={620} />
+            <DownloadButton componentRef={componentRef} />
+            <div id="svg-curve" ref={componentRef} />
         </div>
     );
 };
 
 TumorGrowthCurve.propTypes = {
-    patientParam: PropTypes.string.isRequired,
-    drugParam: PropTypes.string.isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
