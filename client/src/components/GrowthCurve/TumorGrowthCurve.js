@@ -272,7 +272,7 @@ const tumorCurve = (data, plotId, minmax) => {
         top: 30,
         right: 110,
         bottom: 50,
-        left: 60,
+        left: 80,
     };
 
     // make the svg element
@@ -361,6 +361,7 @@ const tumorCurve = (data, plotId, minmax) => {
     svg.append('text')
         .attr('text-anchor', 'middle')
         .attr('fill', 'black')
+        .attr('id', 'volume-text')
         .attr('transform', `translate(${-60},${height / 2})rotate(-90)`)
         .attr('font-size', '14px')
         .text('Volume (mm³)');
@@ -786,6 +787,15 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
 
         // on click handler.
         rect.on('click', () => {
+            console.log(val);
+            // changing the text on y axis.
+            if (val.match(/(volNorm|volNormText)/)) {
+                d3.select('#volume-text')
+                    .text('Normalized volume (mm³)');
+            } else if (val.match(/(volRaw|volRawText)/)) {
+                d3.select('#volume-text')
+                    .text('Volume (mm³)');
+            }
             // y range variable.
             let yrange = calculateNormalizedRange(isNormalized, minVolNorm, maxVolNorm, maxVolume);
             // conditioning.
