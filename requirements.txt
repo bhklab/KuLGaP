@@ -22,7 +22,7 @@ pandas==1.0.5
 paramz==0.9.5
 patsy==0.5.1
 pycodestyle==2.6.0
-pykulgap==0.0.9
+pykulgap==0.0.11
 pylint==2.5.3
 pyparsing==2.4.7
 python-dateutil==2.8.1
