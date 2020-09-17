@@ -93,15 +93,17 @@ const calculateEstimate = (object, data) => {
  *
  * @param {String} key
  * @param {Object} data
+ * @returns {String} - if a responder then 'Yes' else 'No'
  */
 const calculateResponder = (key, data) => {
-    console.log(key, data);
     if (key === 'kl') {
         return data.kl_p_value < 0.05 ? 'Yes' : 'No';
     } else if (key === 'auc') {
         return data.responder_from_AUC === true ? 'Yes' : 'No';
     } else if (key === 'average_angle') {
         return data.responder_from_response_angle === true ? 'Yes' : 'No';
+    } else if (key === 'tgi') {
+        return data.tgi > 0.6 ? 'Yes' : 'No';
     } else if (key === 'mRECIST') {
         const countPD = 0;
         const dataMid = Object.keys(data.mRECIST_control).length / 2;
