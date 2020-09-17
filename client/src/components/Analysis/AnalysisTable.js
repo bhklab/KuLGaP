@@ -12,7 +12,7 @@ import downloadIcon from '../../images/download1.svg';
 const StyledCollapsible = styled.div`
     .Collapsible__trigger {
         color: ${colors.tussock};
-        font-size: calc(0.35vw + 1.0em) !important;
+        font-size: calc(0.35vw + 1em) !important;
         font-weight: 700;
         display: block;
         margin-bottom: 15px;
@@ -41,13 +41,12 @@ const StyledLink = styled.div`
         padding: 8px !important;
         border-radius: 6px;
         text-decoration: none;
-        font-size: 1.0em;
+        font-size: 1em;
     }
     a:hover {
         color: ${colors.main} !important;
         background-color: ${colors.gray_bg} !important;
     }
-    
 `;
 
 const reactTable = (data, columns, type, TheadComponent) => (
@@ -63,9 +62,15 @@ const reactTable = (data, columns, type, TheadComponent) => (
             if (rowInfo) {
                 return {
                     style: {
-                        fontWeight: rowInfo.original.name === 'KuLGaP' ? '600' : 'normal',
-                        color: rowInfo.original.name === 'KuLGaP' ? `${colors.tussock}` : `${colors.main}`,
-                    },
+                        fontWeight:
+                            rowInfo.original.name === 'KuLGaP'
+                                ? '600'
+                                : 'normal',
+                        color:
+                            rowInfo.original.name === 'KuLGaP'
+                                ? `${colors.tussock}`
+                                : `${colors.main}`
+                    }
                 };
             }
             return {};
@@ -84,9 +89,7 @@ const renderOutput = (data, columns, type, TheadComponent) => {
                     </CSVLink>
                 </StyledLink>
                 <StyledCollapsible>
-                    <Collapsible
-                        trigger="Statistics (Model Response)"
-                    >
+                    <Collapsible trigger="Statistics (Model Response)">
                         {reactTable(data, columns, type, TheadComponent)}
                     </Collapsible>
                 </StyledCollapsible>
@@ -107,15 +110,11 @@ const renderOutput = (data, columns, type, TheadComponent) => {
     );
 };
 
-const AnalysisTable = (props) => {
-    const {
-        data, columns, type, TheadComponent,
-    } = props;
+const AnalysisTable = props => {
+    const { data, columns, type, TheadComponent } = props;
     return (
         <TableWrapper>
-            {
-                renderOutput(data, columns, type, TheadComponent)
-            }
+            {renderOutput(data, columns, type, TheadComponent)}
         </TableWrapper>
     );
 };
@@ -123,11 +122,13 @@ const AnalysisTable = (props) => {
 // proptypes.
 AnalysisTable.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    columns: PropTypes.arrayOf(PropTypes.shape({
-        Header: PropTypes.string,
-        accessor: PropTypes.string,
-        minWidth: PropTypes.number,
-    })).isRequired,
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            Header: PropTypes.string,
+            accessor: PropTypes.string,
+            minWidth: PropTypes.number
+        })
+    ).isRequired
 };
 
 export default AnalysisTable;
