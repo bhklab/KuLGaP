@@ -6,4 +6,5 @@ export default {
     red_main: '#b50d34',
     tussock: '#d5840b',
     pale_blue: '#edf2f5',
+    main_light: '#83b7de'
 };

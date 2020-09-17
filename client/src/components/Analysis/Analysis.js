@@ -33,6 +33,20 @@ const StyledAnalysis = styled.div`
     padding: 20px;
     box-sizing: border-box;
     margin-bottom: 30px;
+    overflow: auto;
+    /* width */
+    ::-webkit-scrollbar {
+      height: 10px;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background-color: ${colors.main};
+      border-radius: 10px;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: ${colors.main_light};
+    }
     svg {
       display: flex;
       margin: auto;

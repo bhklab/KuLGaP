@@ -882,7 +882,7 @@ const TumorGrowthCurve = (props) => {
     });
 
     return (
-        <div>
+        <div style={{minWidth: '820px'}}>
             <DownloadButton componentRef={componentRef} />
             <div id="svg-curve" ref={componentRef} />
         </div>

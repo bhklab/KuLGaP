@@ -5,8 +5,8 @@ import colors from '../../styles/colors';
 import downloadIcon from '../../images/download1.svg';
 
 const StyledButton = styled.div`
-    display: inline-block;
     font-weight: 500;
+    overflow: auto;
     float: right;
     button {
       background-color: ${colors.main} !important;
