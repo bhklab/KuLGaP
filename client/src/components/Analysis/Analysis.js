@@ -37,6 +37,7 @@ const StyledAnalysis = styled.div`
     /* width */
     ::-webkit-scrollbar {
       height: 10px;
+      width: 10px;
     }
     /* Handle */
     ::-webkit-scrollbar-thumb {

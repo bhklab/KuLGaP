@@ -6,13 +6,16 @@ import downloadIcon from '../../images/download1.svg';
 
 const StyledButton = styled.div`
     font-weight: 500;
-    overflow: auto;
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    
     button {
       background-color: ${colors.main} !important;
       color: white !important;
       padding: 6px !important;
       padding-left: 10px !important;
+      margin-right: 5px;
       border-radius: 6px;
       border: 0px;
       font-size: 1.0em;
@@ -26,7 +29,6 @@ const StyledButton = styled.div`
         display: inline-block;
         height: 18px;
         width: 25px;
-        margin-left: 5px;
     }
 `;
 

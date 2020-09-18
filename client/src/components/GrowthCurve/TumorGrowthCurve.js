@@ -266,14 +266,14 @@ const tumorCurve = (data, plotId, minmax) => {
     const expTypes = ['control', 'treatment'];
 
     // positioning variables
-    const width = 520;
-    const height = 550;
     const margin = {
         top: 30,
         right: 110,
         bottom: 50,
         left: 80,
     };
+    const width = 520;
+    const height = 550;
 
     // make the svg element
     const svg = d3.select('#svg-curve')
@@ -882,9 +882,9 @@ const TumorGrowthCurve = (props) => {
     });
 
     return (
-        <div style={{minWidth: '700px'}}>
-            <DownloadButton componentRef={componentRef} />
-            <div id="svg-curve" ref={componentRef} />
+        <div>
+            <DownloadButton componentRef={componentRef}/>
+            <div id="svg-curve" ref={componentRef} style={{float:'none !important'}}/>
         </div>
     );
 };
