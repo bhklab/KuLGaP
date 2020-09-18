@@ -266,7 +266,7 @@ const tumorCurve = (data, plotId, minmax) => {
     const expTypes = ['control', 'treatment'];
 
     // positioning variables
-    const width = 640;
+    const width = 520;
     const height = 550;
     const margin = {
         top: 30,
@@ -882,7 +882,7 @@ const TumorGrowthCurve = (props) => {
     });
 
     return (
-        <div style={{minWidth: '820px'}}>
+        <div style={{minWidth: '700px'}}>
             <DownloadButton componentRef={componentRef} />
             <div id="svg-curve" ref={componentRef} />
         </div>

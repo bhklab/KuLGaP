@@ -61,15 +61,38 @@ const GlobalStyles = createGlobalStyle`
         float: right;
     }
 
-
     main {
-        width: 60%;
+        width: 55%;
         margin-top: 6vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         min-height: 50%;
         // background:rgb(0,0,0,0.5);
+    }
+
+    @media only screen and (max-width: 1200px) {
+        main {
+            width: 65%
+        }
+    }
+
+    @media only screen and (max-width: 1160px) {
+        main {
+            width: 67%
+        }
+    }
+
+    @media only screen and (max-width: 1130px) {
+        main {
+            width: 69%
+        }
+    }
+
+    @media only screen and (max-width: 1100px) {
+        main {
+            width: 75%
+        }
     }
     
     .logo, .images {

@@ -68,7 +68,8 @@ const StyledReader = styled.div`
     color: white;
     border-radius: 20px;
     font-weight: 600;
-    font-size: 1.35em;
+    font-size: 1.2em;
+    width: 250px;
     &:hover {
         background: white;
         color: ${colors.main};
