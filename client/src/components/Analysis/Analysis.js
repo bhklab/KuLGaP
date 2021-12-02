@@ -1,6 +1,4 @@
-import React, {
-    useContext,
-} from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import AnalysisContext from '../Context/AnalysisContext';
@@ -56,23 +54,23 @@ const StyledAnalysis = styled.div`
 `;
 
 const Analysis = () => {
-    const { analysisState } = useContext(AnalysisContext);
-    const { data, summary } = analysisState;
+  const { analysisState } = useContext(AnalysisContext);
+  const { data, summary } = analysisState;
 
-    return (
-        <StyledAnalysis>
-            <h2 className="analysis-header">Analysis Results</h2>
-            <div className="container">
-                <BatchStatsTable data={summary} />
-            </div>
-            <div className="container">
-                <TumorGrowthCurve data={data} patientParam="unknown" drugParam="unknow" />
-            </div>
-            <div className="container">
-                <ModelStatsTable data={summary} />
-            </div>
-        </StyledAnalysis>
-    );
+  return (
+    <StyledAnalysis>
+      <h2 className="analysis-header">Analysis Results</h2>
+      <div className="container">
+        <BatchStatsTable data={summary} />
+      </div>
+      <div className="container">
+        <TumorGrowthCurve data={data} />
+      </div>
+      <div className="container">
+        <ModelStatsTable data={summary} />
+      </div>
+    </StyledAnalysis>
+  );
 };
 
 export default Analysis;
