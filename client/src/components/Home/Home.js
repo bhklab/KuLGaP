@@ -10,9 +10,7 @@ function Home() {
     const [analysisState, setAnalysisState] = useState({
         data: null, summary: null, loading: false, error: null,
     });
-    const {
-        loading, summary,
-    } = analysisState;
+    const { loading, summary } = analysisState;
     return (
         <div className="App">
             <Link to="/doc" className="documentation-button">
