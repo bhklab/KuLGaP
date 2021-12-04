@@ -108,8 +108,7 @@ const StyleLink = styled.div`
 const normalVolume = (vol_array, value, i) => (value - vol_array[i]) / (vol_array[i]);
 
 // onverts parsed csv data from paparse library to proper format
-const processData = (data, isDrop) => {
-
+const growthCurveData = (data, isDrop) => {
     const output = [];
     let times = '';
 
@@ -234,12 +233,17 @@ const UploadForm = () => {
             setCsvFile(file);
         }
 
-        const modifiedData = processData(data, isDrop);
+        // transform data
+        const transformedData = isDrop
+            ? transformData(data.map(el => el.data))
+            : transformData(data);
+
+        const curveData = growthCurveData(transformedData, isDrop);
 
         setAnalysisState({
             ...analysisState,
             summary,
-            data: modifiedData,
+            data: curveData,
         });
     };
 
@@ -257,11 +261,9 @@ const UploadForm = () => {
         readRemoteFile(file, {
             download: true,
             complete: (results) => {
-                // transform data
-                const data = transformData(results.data);
                 // runs handleOnDrop function with parsed csv data and example summary from json
                 // no actual file is being passed this way
-                handleOnDrop(data, null, example, false);
+                handleOnDrop(results.data, null, example, false);
             },
         });
     };
