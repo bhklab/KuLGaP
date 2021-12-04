@@ -102,10 +102,10 @@ const getUnionOfTimepoints = (data) => {
     let treatment = [];
 
     for (let i = 0; i < data.length; i++) {
-        if (data[i].exp_type === 'control') {
+        if (data[i].exp_type.match(/control/i)) {
             const time = data[i].pdx_points[0].times;
             control = [...control, ...time];
-        } else if (data[i].exp_type === 'treatment') {
+        } else if (data[i].exp_type.match(/treatment/i)) {
             const time = data[i].pdx_points[0].times;
             treatment = [...treatment, ...time];
         }
@@ -164,13 +164,13 @@ const meanVolumeError = (newVolume, isErrorBar, exptype, data) => {
     let control = 0;
     let treatment = 0;
     data.forEach((val) => {
-        if (val.exp_type === 'control') {
+        if (val.exp_type.match(/control/i)) {
             control += 1;
         } else {
             treatment += 1;
         }
     });
-    const typeNumber = exptype === 'control' ? control : treatment;
+    const typeNumber = exptype.match(/control/i) ? control : treatment;
 
     // median volume.
     // meanVolume = Object.keys(newVolume).map((element) => (d3.deviation(newVolume[element].volume) / (newVolume[element].volume.length)));
@@ -212,7 +212,7 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .append('line')
         .attr('class', 'error')
         .attr('stroke', () => {
-            if (exp === 'control') {
+            if (exp.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -230,7 +230,7 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .append('line')
         .attr('class', 'errorTop')
         .attr('stroke', () => {
-            if (exp === 'control') {
+            if (exp.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -248,7 +248,7 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .append('line')
         .attr('class', 'errorBot')
         .attr('stroke', () => {
-            if (exp === 'control') {
+            if (exp.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -296,7 +296,7 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('class', 'legend')
         .attr('r', 5)
         .attr('fill', (d, i) => {
-            if (expTypes[i] === 'control') {
+            if (expTypes[i].match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -406,8 +406,8 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
         const z = 0;
         const oldVolume = isNormal ? val.pdx_points[0].volume_normals : val.pdx_points[0].volumes;
         const oldTime = val.pdx_points[0].times;
-        const newVolume = val.exp_type === 'control' ? newVolumeControl : newVolumeTreatment;
-        const timeUnionData = val.exp_type === 'control' ? timeUnion[0] : timeUnion[1];
+        const newVolume = val.exp_type.match(/control/i) ? newVolumeControl : newVolumeTreatment;
+        const timeUnionData = val.exp_type.match(/control/i) ? timeUnion[0] : timeUnion[1];
         // calling function to create a new volume object.
         volumeObject(z, oldVolume, oldTime, newVolume, timeUnionData);
     });
@@ -415,7 +415,7 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
     for (let n = 0; n < expTypes.length; n++) {
         const exp = expTypes[n];
         // assigining the volume based on the control or treatment.
-        const newVolume = expTypes[n] === 'control' ? newVolumeControl : newVolumeTreatment;
+        const newVolume = expTypes[n].match(/control/i) ? newVolumeControl : newVolumeTreatment;
 
         // calulating mean volume, standard error and times.
         const [meanVolume, yStandardError, times, number] = meanVolumeError(newVolume, isErrorBar, expTypes[n], data);
@@ -435,7 +435,7 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .attr('class', `mean-dot ${batch}`)
                 .attr('r', 4)
                 .attr('fill', () => {
-                    if (expTypes[n] === 'control') {
+                    if (expTypes[n].match(/control/i)) {
                         return `${colors.tussock}`;
                     }
                     return `${colors.main}`;
@@ -458,7 +458,7 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .attr('fill', 'none')
                 .style('opacity', 0.2)
                 .attr('stroke', () => {
-                    if (expTypes[n] === 'control') {
+                    if (expTypes[n].match(/control/i)) {
                         return `${colors.tussock}`;
                     }
                     return `${colors.main}`;
@@ -507,7 +507,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
                 if (color === 'white') {
                     return color;
                 }
-                if (d.exp_type === 'control') {
+                if (d.exp_type.match(/control/i)) {
                     return `${colors.tussock}`;
                 }
                 return `${colors.main}`;
@@ -552,7 +552,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
         .attr('class', (d) => `model-dot_${d.exp_type}`)
         .attr('r', 4)
         .attr('fill', (d) => {
-            if (d.exp_type === 'control') {
+            if (d.exp_type.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
