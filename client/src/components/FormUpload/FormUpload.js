@@ -1,7 +1,5 @@
 /* eslint-disable no-shadow */
-import React, {
-    useState, useRef, useContext, useEffect,
-} from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { CSVReader, readRemoteFile } from 'react-papaparse';
 import { CSVLink } from 'react-csv';
 import axios from 'axios';
@@ -105,7 +103,7 @@ const StyleLink = styled.div`
 `;
 
 // function to calculate the normal volume.
-const normalVolume = (vol_array, value, i) => (value - vol_array[i]) / (vol_array[i]);
+const normalVolume = (baseValue, currentValue) => (Number(currentValue) - Number(baseValue)) / (Number(baseValue));
 
 // onverts parsed csv data from paparse library to proper format
 const growthCurveData = (data, isDrop) => {
@@ -116,26 +114,31 @@ const growthCurveData = (data, isDrop) => {
         if (i === 0) {
             times = row.value;
         } else {
+            const baseVolume = Number(row.value[0]);
+            const normalVolumeArray = [];
             // calculate the pdx_json.
             const pdxJson = [];
-            row.value.forEach((el, i) => {
+            row.value.forEach((el, j) => {
+                // push to normal volume array.
+                normalVolumeArray.push(normalVolume(baseVolume, el));
+
                 pdxJson.push({
                     batch: 'unknown',
                     exp_type: row.id,
                     model: 'unknown',
-                    time: Number(times[i]),
+                    time: Number(times[j]),
                     volume: Number(el),
-                    volume_normal: Number(el),
+                    volume_normal: normalVolume(baseVolume, el),
                 })
             })
 
             // calculate pdx points.
             const pdxPoints = [];
-            const pdxTimes = row.value.map((el, i) => Number(times[i]));
+            const pdxTimes = row.value.map((el, j) => Number(times[j]));
             pdxPoints.push({
                 times: pdxTimes,
                 volumes: row.value.map(el => Number(el)),
-                volume_normals: row.value.map(el => Number(el)),
+                volume_normals: normalVolumeArray,
             })
 
             // final data.
@@ -149,7 +152,6 @@ const growthCurveData = (data, isDrop) => {
             });
         }
     })
-
     return output;
 };
 
