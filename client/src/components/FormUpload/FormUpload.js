@@ -1,7 +1,5 @@
 /* eslint-disable no-shadow */
-import React, {
-    useState, useRef, useContext, useEffect,
-} from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { CSVReader, readRemoteFile } from 'react-papaparse';
 import { CSVLink } from 'react-csv';
 import axios from 'axios';
@@ -105,60 +103,82 @@ const StyleLink = styled.div`
 `;
 
 // function to calculate the normal volume.
-const normalVolume = (vol_array, value, i) => (value - vol_array[i]) / (vol_array[i]);
+const normalVolume = (baseValue, currentValue) => (Number(currentValue) - Number(baseValue)) / (Number(baseValue));
 
 // onverts parsed csv data from paparse library to proper format
-const processData = (data, isDrop) => {
+const growthCurveData = (data, isDrop) => {
     const output = [];
-    let volume_zero = [];
-    data.forEach((row, i) => {
-        if (!i) {
-            const row_data = isDrop ? row.data : row;
-            row_data.forEach((value, j) => {
-                if (value.match(/(Control|Treatment)/g)) {
-                    output.push({
-                        batch: 'unknown',
-                        drug: value === 'Control' ? 'WATER' : 'unknown',
-                        exp_type: value.toLowerCase(),
-                        model: `unknown${j}`,
-                        pdx_json: [],
-                        pdx_points: [{
-                            times: [],
-                            volumes: [],
-                            volume_normals: [],
-                        }],
-                    });
-                }
-            });
+    let times = '';
+
+    Object.values(data).forEach((row, i) => {
+        if (i === 0) {
+            times = row.value;
         } else {
-            let time = 0;
-            let count = 0;
-            const row_data = isDrop ? row.data : row;
-            if (i === 1) {
-                volume_zero = row_data;
-            }
-            row_data.forEach((value, j) => {
-                if (!j) {
-                    time = Number(value);
-                } else if (value !== '') {
-                    output[count].pdx_json.push({
-                        batch: 'unknown',
-                        time: Number(time),
-                        volume: Number(value),
-                        volume_normal: normalVolume(volume_zero, value, j),
-                        model: output[count].model,
-                        exp_type: output[count].exp_type,
-                    });
-                    output[count].pdx_points[0].times.push(Number(time));
-                    output[count].pdx_points[0].volumes.push(Number(value));
-                    output[count].pdx_points[0].volume_normals.push(normalVolume(volume_zero, value, j));
-                    count++;
-                }
+            const baseVolume = Number(row.value[0]);
+            const normalVolumeArray = [];
+            // calculate the pdx_json.
+            const pdxJson = [];
+            row.value.forEach((el, j) => {
+                // push to normal volume array.
+                normalVolumeArray.push(normalVolume(baseVolume, el));
+
+                pdxJson.push({
+                    batch: 'unknown',
+                    exp_type: row.id,
+                    model: 'unknown',
+                    time: Number(times[j]),
+                    volume: Number(el),
+                    volume_normal: normalVolume(baseVolume, el),
+                })
+            })
+
+            // calculate pdx points.
+            const pdxPoints = [];
+            const pdxTimes = row.value.map((el, j) => Number(times[j]));
+            pdxPoints.push({
+                times: pdxTimes,
+                volumes: row.value.map(el => Number(el)),
+                volume_normals: normalVolumeArray,
+            })
+
+            // final data.
+            output.push({
+                batch: 'unknown',
+                drug: row.id === 'Control' ? 'WATER' : 'unknown',
+                exp_type: row.id,
+                model: 'unknown',
+                pdx_json: pdxJson,
+                pdx_points: pdxPoints
             });
         }
-    });
+    })
     return output;
 };
+
+/**
+ * 
+ * @param {Array} input - array of data
+ * @returns {Object} - object of the transformed data
+ */
+const transformData = (input) => {
+    const inputData = input;
+    const data = {};
+
+    inputData.forEach((row, i) => {
+        row.forEach((el, j) => {
+            if (i === 0 && el !== '') {
+                data[j] = {
+                    id: el,
+                    value: [],
+                }
+            } else if (data[j] && el !== '') {
+                data[j].value.push(el);
+            }
+        })
+    });
+
+    return data;
+}
 
 const UploadForm = () => {
     const [csvFile, setCsvFile] = useState(null);
@@ -215,12 +235,17 @@ const UploadForm = () => {
             setCsvFile(file);
         }
 
-        const modifiedData = processData(data, isDrop);
+        // transform data
+        const transformedData = isDrop
+            ? transformData(data.map(el => el.data))
+            : transformData(data);
+
+        const curveData = growthCurveData(transformedData, isDrop);
 
         setAnalysisState({
             ...analysisState,
             summary,
-            data: modifiedData,
+            data: curveData,
         });
     };
 

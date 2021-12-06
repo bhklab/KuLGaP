@@ -11,7 +11,7 @@ import DownloadButton from '../DownloadButton/DownloadButton';
 import colors from '../../styles/colors';
 
 // this will initialize a tooltip.
-const initializeToolTop = () => d3.select('.wrapper')
+const initializeToolTop = () => d3.select('.growth-curve')
     .append('div')
     .style('position', 'absolute')
     .style('visibility', 'hidden')
@@ -102,10 +102,10 @@ const getUnionOfTimepoints = (data) => {
     let treatment = [];
 
     for (let i = 0; i < data.length; i++) {
-        if (data[i].exp_type === 'control') {
+        if (data[i].exp_type.match(/control/i)) {
             const time = data[i].pdx_points[0].times;
             control = [...control, ...time];
-        } else if (data[i].exp_type === 'treatment') {
+        } else if (data[i].exp_type.match(/treatment/i)) {
             const time = data[i].pdx_points[0].times;
             treatment = [...treatment, ...time];
         }
@@ -164,13 +164,13 @@ const meanVolumeError = (newVolume, isErrorBar, exptype, data) => {
     let control = 0;
     let treatment = 0;
     data.forEach((val) => {
-        if (val.exp_type === 'control') {
+        if (val.exp_type.match(/control/i)) {
             control += 1;
         } else {
             treatment += 1;
         }
     });
-    const typeNumber = exptype === 'control' ? control : treatment;
+    const typeNumber = exptype.match(/control/i) ? control : treatment;
 
     // median volume.
     // meanVolume = Object.keys(newVolume).map((element) => (d3.deviation(newVolume[element].volume) / (newVolume[element].volume.length)));
@@ -212,7 +212,7 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .append('line')
         .attr('class', 'error')
         .attr('stroke', () => {
-            if (exp === 'control') {
+            if (exp.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -230,7 +230,7 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .append('line')
         .attr('class', 'errorTop')
         .attr('stroke', () => {
-            if (exp === 'control') {
+            if (exp.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -248,7 +248,7 @@ const plotErrorBars = (exp, times, newVolume, meanVolume, svg, xrange, yrange, y
         .append('line')
         .attr('class', 'errorBot')
         .attr('stroke', () => {
-            if (exp === 'control') {
+            if (exp.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -296,7 +296,7 @@ const tumorCurve = (data, plotId, minmax) => {
         .attr('class', 'legend')
         .attr('r', 5)
         .attr('fill', (d, i) => {
-            if (expTypes[i] === 'control') {
+            if (expTypes[i].match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -406,8 +406,8 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
         const z = 0;
         const oldVolume = isNormal ? val.pdx_points[0].volume_normals : val.pdx_points[0].volumes;
         const oldTime = val.pdx_points[0].times;
-        const newVolume = val.exp_type === 'control' ? newVolumeControl : newVolumeTreatment;
-        const timeUnionData = val.exp_type === 'control' ? timeUnion[0] : timeUnion[1];
+        const newVolume = val.exp_type.match(/control/i) ? newVolumeControl : newVolumeTreatment;
+        const timeUnionData = val.exp_type.match(/control/i) ? timeUnion[0] : timeUnion[1];
         // calling function to create a new volume object.
         volumeObject(z, oldVolume, oldTime, newVolume, timeUnionData);
     });
@@ -415,7 +415,7 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
     for (let n = 0; n < expTypes.length; n++) {
         const exp = expTypes[n];
         // assigining the volume based on the control or treatment.
-        const newVolume = expTypes[n] === 'control' ? newVolumeControl : newVolumeTreatment;
+        const newVolume = expTypes[n].match(/control/i) ? newVolumeControl : newVolumeTreatment;
 
         // calulating mean volume, standard error and times.
         const [meanVolume, yStandardError, times, number] = meanVolumeError(newVolume, isErrorBar, expTypes[n], data);
@@ -435,7 +435,7 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .attr('class', `mean-dot ${batch}`)
                 .attr('r', 4)
                 .attr('fill', () => {
-                    if (expTypes[n] === 'control') {
+                    if (expTypes[n].match(/control/i)) {
                         return `${colors.tussock}`;
                     }
                     return `${colors.main}`;
@@ -458,7 +458,7 @@ const plotMeans = (data, svg, xrange, yrange, isNormal, isErrorBar, isPlotMean) 
                 .attr('fill', 'none')
                 .style('opacity', 0.2)
                 .attr('stroke', () => {
-                    if (expTypes[n] === 'control') {
+                    if (expTypes[n].match(/control/i)) {
                         return `${colors.tussock}`;
                     }
                     return `${colors.main}`;
@@ -507,7 +507,7 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
                 if (color === 'white') {
                     return color;
                 }
-                if (d.exp_type === 'control') {
+                if (d.exp_type.match(/control/i)) {
                     return `${colors.tussock}`;
                 }
                 return `${colors.main}`;
@@ -516,18 +516,11 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
     );
 
     // selecting and unselecting the table data.
-    const tableSelect = (d, stroke, opacity, tcolor, tback, acolor, aback) => {
+    const updatePathStyle = (d, stroke, opacity, color = 'black') => {
         d3.select(`#path-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}`)
             .attr('stroke-width', stroke)
-            .style('opacity', opacity);
-        d3.selectAll(`.responsetable_${d.model.replace(/\./g, '_')}`)
-            .selectAll('td')
-            .style('color', tcolor)
-            .style('background', tback);
-        d3.selectAll(`.responsetable_${d.model.replace(/\./g, '_')}`)
-            .selectAll('a')
-            .style('color', acolor)
-            .style('background', aback);
+            .style('opacity', opacity)
+        // .style('stroke', color);
     };
 
     // add line
@@ -537,53 +530,16 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
     // create a white line to let user hover over with opacity 0 and event listeners.
     createLine(4, 0, 'white')
         .on('mouseover', (d) => {
-            // creating tooltip.
-            createToolTip(d, 'line', tooltip);
+            console.log('datatatatatatata', d);
             // changing attributes of the line on mouseover.
-            tableSelect(d, 5, 1.0, '#f5f5f5', `${colors.main}`, '#f5f5f5', `${colors.main}`);
+            updatePathStyle(d, 5, 1.0);
         })
         .on('mouseout', (d) => {
-            // remove all the divs with id tooltiptext.
-            d3.selectAll('#tooltiptext').remove();
-            // tooltip on mousever setting the div to hidden.
-            tooltip
-                .style('visibility', 'hidden');
             // changing attributes back to normal of the line on mouseout.
             if (!(d3.select(`#path-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}`).classed('selected'))) {
-                tableSelect(d, 3, 0.7, `${colors.tussock}`, 'white', `${colors.main}`, 'white');
+                updatePathStyle(d, 3, 0.7);
             }
         })
-        .on('click', (d) => {
-            d3.event.preventDefault();
-            let selectedCurve = false;
-            const selection = d3.select(`#path-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}`);
-            // select all the path elements and deselect them.
-            // multiple selections in case of ctrl or command key.
-            if (!(d3.event.ctrlKey || d3.event.metaKey)) {
-                d3.selectAll('path').nodes().forEach((val) => {
-                    if (val.attributes[5] && val.style.opacity !== '0' && val.classList.contains('selected')) {
-                        val.attributes[5].value = 3;
-                        val.style.opacity = 0.7;
-                        const previousSelection = d3.select(`.${val.classList[0]}`);
-                        const model = previousSelection.data()[0];
-                        previousSelection.classed('selected', false);
-                        tableSelect(model, 3, 0.7, `${colors.tussock}`, 'white', `${colors.main}`, 'white');
-                        if (val.classList[0] === selection.attr('class')) {
-                            selectedCurve = true;
-                        }
-                    }
-                });
-            }
-
-            // highlight and classed according to selection.
-            if (!(selection.classed('selected')) && !selectedCurve) {
-                selection.classed('selected', true);
-                tableSelect(d, 5, 1.0, '#f5f5f5', `${colors.main}`, '#f5f5f5', `${colors.main}`);
-            } else if (selection.classed('selected')) {
-                selection.classed('selected', false);
-                tableSelect(d, 3, 0.7, `${colors.tussock}`, 'white', `${colors.main}`, 'white');
-            }
-        });
 
     // plotting the dots
     const dots = models.selectAll('.model-dot')
@@ -592,12 +548,11 @@ const plotBatch = (data, graph, xrange, yrange, tooltip, norm) => {
 
     // appends dots.
     dots.append('circle')
-        .attr('id', (d, i) => `dot-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}-${
-            d.exp_type}${i}`)
+        .attr('id', (d, i) => `dot-${d.model.replace(/\./g, ' ').replace(/\s/g, '-')}-${d.exp_type}${i}`)
         .attr('class', (d) => `model-dot_${d.exp_type}`)
         .attr('r', 4)
         .attr('fill', (d) => {
-            if (d.exp_type === 'control') {
+            if (d.exp_type.match(/control/i)) {
                 return `${colors.tussock}`;
             }
             return `${colors.main}`;
@@ -636,34 +591,34 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
     function createReactangle(additionalHeight, color, id, val, text, extraWidth, extraHeight) {
         let rect = '';
         switch (val) {
-        case 'volRaw':
-        case 'volNorm':
-        case 'errorBar':
-        case 'allCurves':
-            rect = svg.append('rect')
-                .attr('x', width + 25)
-                .attr('y', height / 2 + additionalHeight)
-                .attr('width', 70)
-                .attr('height', 20)
-                .attr('fill', color)
-                .style('opacity', 0.8)
-                .attr('id', id);
-            break;
-        case 'volRawText':
-        case 'volNormText':
-        case 'errorBarText':
-        case 'allCurvesText':
-            rect = svg.append('text')
-                .attr('fill', 'black')
-                .style('font-size', '12px')
-                .attr('text-anchor', val === 'volRawText' ? 'middle' : 'null')
-                .attr('id', id)
-                .attr('x', width + extraWidth)
-                .attr('y', height / 2 + extraHeight)
-                .text(text);
-            break;
-        default:
-            console.log('It\'s not available');
+            case 'volRaw':
+            case 'volNorm':
+            case 'errorBar':
+            case 'allCurves':
+                rect = svg.append('rect')
+                    .attr('x', width + 25)
+                    .attr('y', height / 2 + additionalHeight)
+                    .attr('width', 70)
+                    .attr('height', 20)
+                    .attr('fill', color)
+                    .style('opacity', 0.8)
+                    .attr('id', id);
+                break;
+            case 'volRawText':
+            case 'volNormText':
+            case 'errorBarText':
+            case 'allCurvesText':
+                rect = svg.append('text')
+                    .attr('fill', 'black')
+                    .style('font-size', '12px')
+                    .attr('text-anchor', val === 'volRawText' ? 'middle' : 'null')
+                    .attr('id', id)
+                    .attr('x', width + extraWidth)
+                    .attr('y', height / 2 + extraHeight)
+                    .text(text);
+                break;
+            default:
+                console.log('It\'s not available');
         }
         return rect;
     }
@@ -722,64 +677,64 @@ const volumeToggle = (data, svg, xrange, width, height, maxVolume, maxVolNorm, m
 
         // switching based on the toggle value.
         switch (val) {
-        case 'errorBar':
-        case 'errorBarText':
-            additionalHeight = 70;
-            color = 'lightgray';
-            id = val === 'errorBar' ? 'errorBar' : 'errorBarText';
-            text = val === 'errorBarText' ? 'ErrorBars' : '';
-            extraWidth = 34;
-            allToggle = 'lightgray';
-            errorToggle = `${colors.tussock}`;
-            break;
+            case 'errorBar':
+            case 'errorBarText':
+                additionalHeight = 70;
+                color = 'lightgray';
+                id = val === 'errorBar' ? 'errorBar' : 'errorBarText';
+                text = val === 'errorBarText' ? 'ErrorBars' : '';
+                extraWidth = 34;
+                allToggle = 'lightgray';
+                errorToggle = `${colors.tussock}`;
+                break;
 
-        case 'allCurves':
-            id = 'allCurves';
-            break;
+            case 'allCurves':
+                id = 'allCurves';
+                break;
 
-        case 'allCurvesText':
-            id = 'allCurvesText';
-            text = 'All Curves';
-            extraWidth = 32;
-            extraHeight = 64;
-            break;
+            case 'allCurvesText':
+                id = 'allCurvesText';
+                text = 'All Curves';
+                extraWidth = 32;
+                extraHeight = 64;
+                break;
 
-        case 'volRaw':
-            additionalHeight = 120;
-            id = 'volRawToggle';
-            color = `${colors.main}`;
-            break;
+            case 'volRaw':
+                additionalHeight = 120;
+                id = 'volRawToggle';
+                color = `${colors.main}`;
+                break;
 
-        case 'volRawText':
-            id = 'volRawText';
-            text = 'Raw';
-            extraWidth = 60;
-            extraHeight = 134;
-            break;
+            case 'volRawText':
+                id = 'volRawText';
+                text = 'Raw';
+                extraWidth = 60;
+                extraHeight = 134;
+                break;
 
-        case 'volNorm':
-            additionalHeight = 141;
-            id = 'volNormToggle';
-            color = 'lightgray';
-            minimum = minVolNorm - 1;
-            maximum = maxVolNorm + 1;
-            rawToggle = 'lightgray';
-            normToggle = `${colors.main}`;
-            break;
+            case 'volNorm':
+                additionalHeight = 141;
+                id = 'volNormToggle';
+                color = 'lightgray';
+                minimum = minVolNorm - 1;
+                maximum = maxVolNorm + 1;
+                rawToggle = 'lightgray';
+                normToggle = `${colors.main}`;
+                break;
 
-        case 'volNormText':
-            id = 'volNormText';
-            text = 'Normalized';
-            extraWidth = 28;
-            extraHeight = 155;
-            minimum = minVolNorm - 1;
-            maximum = maxVolNorm + 1;
-            rawToggle = 'lightgray';
-            normToggle = `${colors.main}`;
-            break;
+            case 'volNormText':
+                id = 'volNormText';
+                text = 'Normalized';
+                extraWidth = 28;
+                extraHeight = 155;
+                minimum = minVolNorm - 1;
+                maximum = maxVolNorm + 1;
+                rawToggle = 'lightgray';
+                normToggle = `${colors.main}`;
+                break;
 
-        default:
-            id = 'Looking for what??';
+            default:
+                id = 'Looking for what??';
         }
 
         // create rectangles/toggle bars.
@@ -882,9 +837,9 @@ const TumorGrowthCurve = (props) => {
     });
 
     return (
-        <div>
-            <DownloadButton componentRef={componentRef}/>
-            <div id="svg-curve" ref={componentRef} style={{float:'none !important'}}/>
+        <div className='growth-curve'>
+            <DownloadButton componentRef={componentRef} />
+            <div id="svg-curve" ref={componentRef} style={{ float: 'none !important' }} />
         </div>
     );
 };
